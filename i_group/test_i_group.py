@@ -40,7 +40,7 @@ def build_controller():
     return InfrastructureController(topo), topo
 
 
-def all_signals(topo, phase="NS"):
+def all_signals(topo, phase="N"):
     """Return a signals dict with every intersection set to `phase`."""
     return {
         iid: SignalState(intersection_id=iid, green_direction=phase)
@@ -54,7 +54,7 @@ def all_signals(topo, phase="NS"):
 
 def test_compute_signals_coverage():
     """compute_signals must return exactly 9 actions (one per intersection)
-    and every green_direction must be 'NS' or 'EW'."""
+    and every green_direction must be 'N', 'S', 'E', or 'W'."""
     ctrl, topo = build_controller()
     state = GlobalState(step=0, cars={}, signals=all_signals(topo))
 
@@ -81,7 +81,7 @@ def test_compute_signals_coverage():
 def test_no_violations_clean_state():
     """Two cars moving legally → all violation counts must be 0."""
     ctrl, topo = build_controller()
-    sigs = all_signals(topo, "NS")
+    sigs = all_signals(topo, "N")
 
     # Both cars on different segments, correct directions, different slots
     prev = GlobalState(step=0, cars={
@@ -109,7 +109,7 @@ def test_no_violations_clean_state():
 def test_collision_detection():
     """Two cars merge into the same slot → collisions = 1."""
     ctrl, topo = build_controller()
-    sigs = all_signals(topo, "NS")
+    sigs = all_signals(topo, "N")
 
     prev = GlobalState(step=0, cars={
         1: CarState(car_id=1, segment_id="I00_I01", slot=5, direction="E"),
@@ -137,13 +137,13 @@ def test_red_light_violation_detection():
     """
     Setup:
       - Segment I00_I01 goes East; length = 30; last slot = 29; end = I01.
-      - Signal at I01 is 'NS' green → East-bound cars (E direction) face red.
+      - Signal at I01 is 'N' green → East-bound cars (E direction) face red.
       - In prev_state: car is at slot 29 of I00_I01.
       - In curr_state: car has moved to I01_I02 (it crossed the red light).
     Expected: red_light_violations = 1.
     """
     ctrl, topo = build_controller()
-    sigs = all_signals(topo, "NS")   # NS green → EW red
+    sigs = all_signals(topo, "N")   # N green → S/E/W red
 
     prev = GlobalState(step=0, cars={
         1: CarState(car_id=1, segment_id="I00_I01", slot=29, direction="E"),
@@ -171,7 +171,7 @@ def test_wrong_way_violation_detection():
     Expected: wrong_way_violations = 1.
     """
     ctrl, topo = build_controller()
-    sigs = all_signals(topo, "NS")
+    sigs = all_signals(topo, "N")
 
     prev = GlobalState(step=0, cars={
         1: CarState(car_id=1, segment_id="I00_I01", slot=5, direction="W"),
@@ -200,7 +200,7 @@ def test_get_stats_accumulates():
     total_wrong_way_violations=0.
     """
     ctrl, topo = build_controller()
-    sigs = all_signals(topo, "NS")
+    sigs = all_signals(topo, "N")
 
     # --- Step A: collision ---
     prev_a = GlobalState(step=0, cars={

@@ -30,9 +30,12 @@ ACTIONS = [
 
 
 # Traffic signal phases
-# NS: North-South direction has green
-# EW: East-West direction has green
-SIGNAL_PHASES = ["NS", "EW"]
+# Each phase is a single cardinal direction: the one light that is green.
+# N: North-bound has green
+# S: South-bound has green
+# E: East-bound has green
+# W: West-bound has green
+SIGNAL_PHASES = ["N", "S", "E", "W"]
 
 
 # Slot boundaries for each road segment

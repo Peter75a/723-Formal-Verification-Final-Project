@@ -110,7 +110,7 @@ class SignalSnapshot:
 
     Attributes:
         intersection_id (str):   Intersection ID
-        green_direction (str):   Current green phase ("NS" or "EW")
+        green_direction (str):   Current green phase ("N" | "S" | "E" | "W")
     """
     intersection_id: str
     green_direction: str
