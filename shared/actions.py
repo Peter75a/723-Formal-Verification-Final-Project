@@ -32,7 +32,7 @@ class SignalAction:
 
     Attributes:
         intersection_id (str): Unique identifier of intersection
-        green_direction (str): One of SIGNAL_PHASES ("NS" or "EW")
+        green_direction (str): One of SIGNAL_PHASES ("N" | "S" | "E" | "W")
     """
     intersection_id: str
     green_direction: str

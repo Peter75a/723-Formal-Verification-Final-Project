@@ -31,7 +31,7 @@ class SignalScheduler:
         self.min_green = min_green
         self.max_green = max_green
 
-        # intersection_id -> current green phase ("NS" or "EW")
+        # intersection_id -> current green phase ("N" | "S" | "E" | "W")
         self._phase: Dict[str, str] = {}
         # intersection_id -> steps elapsed in current phase
         self._timer: Dict[str, int] = {}
@@ -41,13 +41,13 @@ class SignalScheduler:
     # ------------------------------------------------------------------
 
     def initialize(self, intersection_ids: List[str],
-                   default_phase: str = "NS") -> None:
+                   default_phase: str = "N") -> None:
         """
         Set up all intersections with a default phase and timer = 0.
 
         Args:
             intersection_ids: All intersection IDs in the topology.
-            default_phase:    Starting green direction ("NS" or "EW").
+            default_phase:    Starting green direction ("N" | "S" | "E" | "W").
         """
         for iid in intersection_ids:
             self._phase[iid] = default_phase
@@ -83,11 +83,12 @@ class SignalScheduler:
 
     def switch(self, intersection_id: str) -> None:
         """
-        Flip the green phase (NS ↔ EW) and reset the timer.
+        Cycle the green phase (N → E → S → W → N) and reset the timer.
         Call this when a phase change is decided.
         """
+        _cycle = {"N": "E", "E": "S", "S": "W", "W": "N"}
         current = self._phase[intersection_id]
-        self._phase[intersection_id] = "EW" if current == "NS" else "NS"
+        self._phase[intersection_id] = _cycle[current]
         self._timer[intersection_id] = 0
 
     # ------------------------------------------------------------------

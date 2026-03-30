@@ -3,7 +3,7 @@
 """
 Signal phase decision policy.
 
-Decides which direction (NS or EW) should be green at each intersection,
+Decides which direction (N | S | E | W) should be green at each intersection,
 using an adaptive strategy based on the number of cars approaching.
 """
 
@@ -22,11 +22,7 @@ APPROACH_THRESHOLD = 15   # 15 slots ≈ 0.25 mile
 
 def _direction_matches_phase(direction: str, phase: str) -> bool:
     """Return True if a car travelling `direction` is covered by `phase`."""
-    if phase == "NS":
-        return direction in ("N", "S")
-    if phase == "EW":
-        return direction in ("E", "W")
-    return False
+    return direction == phase
 
 
 class SignalPolicy:
@@ -53,7 +49,7 @@ class SignalPolicy:
 
     def decide(self, intersection_id: str, state: GlobalState) -> str:
         """
-        Return the green phase ("NS" or "EW") for this intersection at this step.
+        Return the green phase ("N" | "S" | "E" | "W") for this intersection at this step.
         Side-effect: advances or resets the scheduler timer.
 
         Args:
@@ -61,7 +57,7 @@ class SignalPolicy:
             state:           Current global simulation state.
 
         Returns:
-            "NS" or "EW"
+            "N", "S", "E", or "W"
         """
         current = self.scheduler.get_phase(intersection_id)
 
@@ -72,13 +68,15 @@ class SignalPolicy:
 
         # Voluntary switch — look at traffic if minimum time served
         if self.scheduler.can_switch(intersection_id):
-            ns_count = self._count_approaching(intersection_id, "NS", state)
-            ew_count = self._count_approaching(intersection_id, "EW", state)
+            current_count = self._count_approaching(intersection_id, current, state)
+            other_directions = [d for d in ("N", "S", "E", "W") if d != current]
+            best_other = max(
+                other_directions,
+                key=lambda d: self._count_approaching(intersection_id, d, state),
+            )
+            best_other_count = self._count_approaching(intersection_id, best_other, state)
 
-            current_count = ns_count if current == "NS" else ew_count
-            other_count   = ew_count if current == "NS" else ns_count
-
-            if other_count > current_count:
+            if best_other_count > current_count:
                 self.scheduler.switch(intersection_id)
                 return self.scheduler.get_phase(intersection_id)
 

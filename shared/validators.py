@@ -38,7 +38,7 @@ def is_valid_action(action: str) -> bool:
 
 
 def is_valid_signal_phase(phase: str) -> bool:
-    """Return True iff phase is one of NS/EW."""
+    """Return True iff phase is one of N/S/E/W."""
     return phase in SIGNAL_PHASES
 
 

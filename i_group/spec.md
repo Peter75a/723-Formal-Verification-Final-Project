@@ -139,10 +139,8 @@ This is the **only output** i-group produces. The simulator applies it to update
 
 ## 5. Signal Phase Rules
 
-- Each intersection has exactly **2 phases**: `"NS"` (North-South green) and `"EW"` (East-West green)
-- At most **1 phase** is green at any time
-- **`"NS"` green** means cars travelling N or S may cross; E/W cars must stop
-- **`"EW"` green** means cars travelling E or W may cross; N/S cars must stop
+- Each intersection has **at most 4 signal lights**, one per direction: N, S, E, W
+- At any time, **at most 1 light can be green**; all others are red
 - A car at **red light must stop** (speed = 0, action = `"STAY"`)
 - A car cannot make a **right turn at red light** (even though right turns are otherwise allowed)
 

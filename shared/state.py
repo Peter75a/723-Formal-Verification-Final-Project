@@ -45,7 +45,7 @@ class SignalState:
 
     Attributes:
         intersection_id (str):  Unique identifier
-        green_direction (str):  Current green phase ("NS" or "EW")
+        green_direction (str):  Current green phase ("N" | "S" | "E" | "W")
     """
     intersection_id: str
     green_direction: str
