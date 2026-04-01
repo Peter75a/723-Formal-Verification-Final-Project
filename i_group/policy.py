@@ -57,33 +57,57 @@ class SignalPolicy:
             state:           Current global simulation state.
 
         Returns:
-            "N", "S", "E", or "W"
+            A topology-valid direction (one of the intersection's outgoing directions).
         """
         current = self.scheduler.get_phase(intersection_id)
+        valid_dirs = self._valid_directions(intersection_id)
+
+        # Correct any topology-invalid phase (e.g. from initialisation default "N"
+        # at a top-row intersection that has no outgoing North road).
+        if valid_dirs and current not in valid_dirs:
+            best = max(
+                valid_dirs,
+                key=lambda d: (
+                    self._count_approaching(intersection_id, d, state),
+                    self.scheduler.cycle_priority(intersection_id, d),
+                ),
+            )
+            self.scheduler.switch_to(intersection_id, best, valid_phases=set(valid_dirs))
+            return self.scheduler.get_phase(intersection_id)
 
         # Mandatory switch — phase has been on too long
         if self.scheduler.must_switch(intersection_id):
-            other_directions = [d for d in ("N", "S", "E", "W") if d != current]
+            other_directions = [d for d in valid_dirs if d != current]
+            if not other_directions:          # only one valid direction — keep it
+                self.scheduler.tick(intersection_id)
+                return current
             best_other = max(
                 other_directions,
-                key=lambda d: self._count_approaching(intersection_id, d, state),
+                key=lambda d: (
+                    self._count_approaching(intersection_id, d, state),  # primary: most cars
+                    self.scheduler.cycle_priority(intersection_id, d),   # tiebreaker: round-robin
+                ),
             )
-            self.scheduler.switch_to(intersection_id, best_other)
+            self.scheduler.switch_to(intersection_id, best_other, valid_phases=set(valid_dirs))
             return self.scheduler.get_phase(intersection_id)
 
         # Voluntary switch — look at traffic if minimum time served
         if self.scheduler.can_switch(intersection_id):
             current_count = self._count_approaching(intersection_id, current, state)
-            other_directions = [d for d in ("N", "S", "E", "W") if d != current]
-            best_other = max(
-                other_directions,
-                key=lambda d: self._count_approaching(intersection_id, d, state),
-            )
-            best_other_count = self._count_approaching(intersection_id, best_other, state)
+            other_directions = [d for d in valid_dirs if d != current]
+            if other_directions:
+                best_other = max(
+                    other_directions,
+                    key=lambda d: (
+                        self._count_approaching(intersection_id, d, state),  # primary: most cars
+                        self.scheduler.cycle_priority(intersection_id, d),   # tiebreaker: round-robin
+                    ),
+                )
+                best_other_count = self._count_approaching(intersection_id, best_other, state)
 
-            if best_other_count > current_count:
-                self.scheduler.switch_to(intersection_id, best_other) # switch to the better phase
-                return self.scheduler.get_phase(intersection_id)
+                if best_other_count > current_count:
+                    self.scheduler.switch_to(intersection_id, best_other, valid_phases=set(valid_dirs))  # switch to the better phase
+                    return self.scheduler.get_phase(intersection_id)
 
         # Keep current phase, advance timer
         self.scheduler.tick(intersection_id)
@@ -125,3 +149,26 @@ class SignalPolicy:
             if seg and car.slot >= seg.length - APPROACH_THRESHOLD:
                 count += 1
         return count
+
+    def _valid_directions(self, intersection_id: str) -> list:
+        """
+        Return the directions of all outgoing segments at this intersection.
+
+        Uses topology.get_intersection() so that only topology-valid directions
+        are ever considered by the policy.  Any direction not in this list has
+        no outgoing road and must never appear in a SignalAction.
+
+        Args:
+            intersection_id: e.g. "I00"
+
+        Returns:
+            List of direction strings (subset of ["N", "S", "E", "W"]).
+        """
+        inter = self.topology.get_intersection(intersection_id)
+        if inter is None:
+            return []
+        return [
+            self.topology.get_segment_direction(seg_id)
+            for seg_id in inter.outgoing
+            if self.topology.get_segment_direction(seg_id) is not None
+        ]

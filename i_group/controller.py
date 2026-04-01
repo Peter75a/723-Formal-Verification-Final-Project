@@ -45,9 +45,10 @@ class InfrastructureController:
         self.policy    = SignalPolicy(topology, self.scheduler)
 
         # Cumulative violation counters
-        self.total_collisions:          int = 0
-        self.total_red_light_violations: int = 0
-        self.total_wrong_way_violations: int = 0
+        self.total_collisions:             int = 0
+        self.total_red_light_violations:   int = 0
+        self.total_wrong_way_violations:   int = 0
+        self.total_multi_crossing_violations: int = 0
 
     # ------------------------------------------------------------------
     # Signal computation  (called BEFORE vehicles move)
@@ -87,21 +88,25 @@ class InfrastructureController:
 
         Returns:
             Dict with keys "step", "collisions", "red_light_violations",
-            "wrong_way_violations" — all counts for this single step.
+            "wrong_way_violations", "multi_crossing_violations" — all counts
+            for this single step.
         """
-        collisions   = self._check_collisions(curr_state)
-        red_viols    = self._check_red_light_violations(prev_state, curr_state)
-        wrong_way    = self._check_wrong_way(curr_state)
+        collisions       = self._check_collisions(curr_state)
+        red_viols        = self._check_red_light_violations(prev_state, curr_state)
+        wrong_way        = self._check_wrong_way(curr_state)
+        multi_crossings  = self._check_multi_crossings(prev_state, curr_state)
 
-        self.total_collisions           += collisions
-        self.total_red_light_violations += red_viols
-        self.total_wrong_way_violations += wrong_way
+        self.total_collisions                += collisions
+        self.total_red_light_violations      += red_viols
+        self.total_wrong_way_violations      += wrong_way
+        self.total_multi_crossing_violations += multi_crossings
 
         return {
-            "step":                  curr_state.step,
-            "collisions":            collisions,
-            "red_light_violations":  red_viols,
-            "wrong_way_violations":  wrong_way,
+            "step":                      curr_state.step,
+            "collisions":                collisions,
+            "red_light_violations":      red_viols,
+            "wrong_way_violations":      wrong_way,
+            "multi_crossing_violations": multi_crossings,
         }
 
     # ------------------------------------------------------------------
@@ -111,9 +116,10 @@ class InfrastructureController:
     def get_stats(self) -> Dict[str, int]:
         """Return cumulative violation counts over all verified steps."""
         return {
-            "total_collisions":           self.total_collisions,
-            "total_red_light_violations": self.total_red_light_violations,
-            "total_wrong_way_violations": self.total_wrong_way_violations,
+            "total_collisions":                self.total_collisions,
+            "total_red_light_violations":      self.total_red_light_violations,
+            "total_wrong_way_violations":      self.total_wrong_way_violations,
+            "total_multi_crossing_violations": self.total_multi_crossing_violations,
         }
 
     # ------------------------------------------------------------------
@@ -171,7 +177,10 @@ class InfrastructureController:
             if not self.topology.is_intersection(intersection_id):
                 continue
 
-            # Check if the signal was green for this car's direction
+            # Check if the signal was green for this car's direction.
+            # If no signal entry exists for this intersection (e.g. step 0 before
+            # compute_signals has been called), we cannot determine the phase and
+            # must skip — this is a known gap, not a silent error.
             signal = prev.signals.get(intersection_id)
             if signal is None:
                 continue
@@ -194,3 +203,47 @@ class InfrastructureController:
             if seg and car.direction != seg.direction:
                 violations += 1
         return violations
+
+    def _check_multi_crossings(self,
+                                prev: GlobalState,
+                                curr: GlobalState) -> int:
+        """
+        Count intersections where two or more cars crossed in the same step.
+
+        A crossing is detected when:
+          - At step t,   the car was at the LAST slot of an incoming segment
+                         ending at a circle intersection.
+          - At step t+1, the car is on a DIFFERENT segment.
+
+        Each intersection where this happened for 2+ cars counts as 1 violation.
+        """
+        # Map intersection_id -> number of cars that crossed it this step
+        crossings: Dict[str, int] = {}
+
+        for car_id, curr_car in curr.cars.items():
+            if not curr_car.active:
+                continue
+            prev_car = prev.cars.get(car_id)
+            if prev_car is None or not prev_car.active:
+                continue
+
+            # Car must have been at the last slot of its previous segment
+            prev_seg = self.topology.get_segment_by_id(prev_car.segment_id)
+            if prev_seg is None:
+                continue
+            if prev_car.slot != prev_seg.length - 1:
+                continue
+
+            # Car must have moved to a new segment
+            if prev_car.segment_id == curr_car.segment_id:
+                continue
+
+            # The segment must end at a real intersection
+            intersection_id = prev_seg.end
+            if not self.topology.is_intersection(intersection_id):
+                continue
+
+            crossings[intersection_id] = crossings.get(intersection_id, 0) + 1
+
+        # One violation per intersection where 2+ cars crossed simultaneously
+        return sum(1 for count in crossings.values() if count > 1)
