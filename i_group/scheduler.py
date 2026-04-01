@@ -80,6 +80,18 @@ class SignalScheduler:
     def tick(self, intersection_id: str) -> None:
         """Advance the phase timer by one step (call when NOT switching)."""
         self._timer[intersection_id] += 1
+    
+    # update here
+    def switch_to(self, intersection_id: str, new_phase: str) -> None:
+        """
+        Directly set the green phase to a specific direction and reset the timer.
+        This method is used by the adaptive policy when it selects a specific
+        target direction based on current traffic demand.
+        """
+        if new_phase not in ("N", "S", "E", "W"):
+            raise ValueError(f"Invalid phase: {new_phase}")
+        self._phase[intersection_id] = new_phase
+        self._timer[intersection_id] = 0
 
     def switch(self, intersection_id: str) -> None:
         """
