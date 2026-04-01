@@ -66,7 +66,10 @@ class SignalPolicy:
             other_directions = [d for d in ("N", "S", "E", "W") if d != current]
             best_other = max(
                 other_directions,
-                key=lambda d: self._count_approaching(intersection_id, d, state),
+                key=lambda d: (
+                    self._count_approaching(intersection_id, d, state),  # primary: most cars
+                    self.scheduler.cycle_priority(intersection_id, d),   # tiebreaker: round-robin
+                ),
             )
             self.scheduler.switch_to(intersection_id, best_other)
             return self.scheduler.get_phase(intersection_id)
@@ -77,7 +80,10 @@ class SignalPolicy:
             other_directions = [d for d in ("N", "S", "E", "W") if d != current]
             best_other = max(
                 other_directions,
-                key=lambda d: self._count_approaching(intersection_id, d, state),
+                key=lambda d: (
+                    self._count_approaching(intersection_id, d, state),  # primary: most cars
+                    self.scheduler.cycle_priority(intersection_id, d),   # tiebreaker: round-robin
+                ),
             )
             best_other_count = self._count_approaching(intersection_id, best_other, state)
 

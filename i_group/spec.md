@@ -110,7 +110,7 @@ class CarState:
 @dataclass
 class SignalState:
     intersection_id: str     # e.g. "I11"
-    green_direction: str     # "NS" or "EW"
+    green_direction: str     # "N" | "S" | "E" | "W"
 ```
 
 ### 4.3 `GlobalState` (`shared/state.py`)
@@ -130,7 +130,7 @@ class GlobalState:
 @dataclass
 class SignalAction:
     intersection_id: str     # target intersection
-    green_direction: str     # "NS" or "EW"
+    green_direction: str     # "N" | "S" | "E" | "W"
 ```
 
 This is the **only output** i-group produces. The simulator applies it to update `GlobalState.signals`.
@@ -145,7 +145,57 @@ This is the **only output** i-group produces. The simulator applies it to update
 - A car cannot make a **right turn at red light** (even though right turns are otherwise allowed)
 
 
-## 6. i-group Module Structure
+## 6. Signal Policy Strategy
+
+### 6.1 Max-Pressure with Round-Robin Tiebreaker
+
+The adaptive signal policy (`policy.py`) uses a two-level decision rule:
+
+**Primary rule — efficiency (max-pressure):**
+Always pick the direction with the most approaching cars waiting.
+This maximises throughput by giving green time to the most congested direction.
+
+**Tiebreaker — fairness (round-robin):**
+If multiple directions have equal approaching-car counts, use a round-robin cycle:
+```
+N → S → E → W → N → …
+```
+This prevents starvation when traffic is equal or absent, ensuring every direction
+gets green time in turn.
+
+**Decision flow per intersection per step:**
+
+```
+1. must_switch? (timer >= MAX_GREEN)
+       ↓ yes
+   pick best OTHER direction by (car_count, cycle_priority)
+   → switch, advance cycle pointer
+
+2. can_switch? (timer >= MIN_GREEN)
+       ↓ yes
+   compute car_count for current and all other directions
+   if best_other_count > current_count
+       → switch to best other (tiebreaker: cycle_priority)
+   else
+       → keep current, tick timer
+
+3. neither
+       → keep current, tick timer
+```
+
+**Key property:** `(car_count, cycle_priority)` is a 2-tuple used as the `max()` key.
+Python compares tuples left-to-right, so real traffic always wins; the cycle order
+only activates when counts are exactly equal.
+
+**Cycle pointer state (`scheduler._cycle_index`):**
+- Initialised to `0` (pointing at `"N"`) for every intersection.
+- Advanced to `(chosen_index + 1) % 4` on every `switch_to()` call.
+- `cycle_priority(intersection_id, direction)` returns `-(distance from pointer)`;
+  the direction at the pointer scores `0` (highest), the farthest scores `-3`.
+
+---
+
+## 7. i-group Module Structure
 
 ```
 i_group/
@@ -157,11 +207,11 @@ i_group/
 
 
 
-## 7. Safety Verification Rules
+## 8. Safety Verification Rules
 
 `verify_step(prev_state, curr_state)` checks three violation types after each step.
 
-### 7.1 Collision (`_check_collisions`)
+### 8.1 Collision (`_check_collisions`)
 
 **Definition:** More than 1 active car occupies the same `(segment_id, slot)` in `curr_state`.
 
@@ -174,7 +224,7 @@ for each active car in curr_state:
 
 Each over-occupied slot counts as **1 collision event**.
 
-### 7.2 Red-Light Violation (`_check_red_light_violations`)
+### 8.2 Red-Light Violation (`_check_red_light_violations`)
 
 **Definition:** A car crossed an intersection while the signal was red for its direction.
 
@@ -187,7 +237,7 @@ Each over-occupied slot counts as **1 collision event**.
 
 **Key:** Uses `prev_state.signals` (the signals in effect when the car moved).
 
-### 7.3 Wrong-Way Violation (`_check_wrong_way`)
+### 8.3 Wrong-Way Violation (`_check_wrong_way`)
 
 **Definition:** An active car's `direction` does not match its current segment's defined direction.
 
@@ -199,7 +249,7 @@ for each active car in curr_state:
 
 ---
 
-## 8. Safety Constraints Summary
+## 9. Safety Constraints Summary
 
 | Constraint | Checked by | Source |
 |---|---|---|
@@ -214,7 +264,7 @@ All three violation counts must be **0** for a valid simulation run.
 
 ---
 
-## 9. Visibility Rules (for reference — enforced by v-group)
+## 10. Visibility Rules (for reference — enforced by v-group)
 
 - A car can see another car ahead on the same segment within **0.5 mile = 30 slots**
 - If car P sees car Q directly ahead (no third car between them), P **must not move**
@@ -223,11 +273,11 @@ All three violation counts must be **0** for a valid simulation run.
 
 ---
 
-## 10. Coding Conventions
+## 11. Coding Conventions
 
 - i-group must **never modify** `GlobalState` directly; only return `List[SignalAction]`
 - All intersection IDs come from `topology.all_intersection_ids()` → sorted list e.g. `["I00", "I01", ..., "I22"]`
-- Signal phase strings are always `"NS"` or `"EW"` (from `SIGNAL_PHASES` in `enums.py`)
+- Signal phase strings are always `"N"`, `"S"`, `"E"`, or `"W"` (from `SIGNAL_PHASES` in `enums.py`)
 - Direction strings are always single uppercase chars: `"N"`, `"S"`, `"E"`, `"W"`
 - `active=False` cars must be skipped in all checks
 - `prev_state.signals` is a `Dict[str, SignalState]` keyed by `intersection_id`

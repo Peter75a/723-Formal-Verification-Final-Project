@@ -10,6 +10,10 @@ and determines when a phase switch is allowed or required.
 from typing import Dict, List
 
 
+# Round-robin cycle order used as a tiebreaker when car counts are equal.
+_CYCLE = ["N", "S", "E", "W"]
+
+
 class SignalScheduler:
     """
     Per-intersection phase timer.
@@ -35,6 +39,8 @@ class SignalScheduler:
         self._phase: Dict[str, str] = {}
         # intersection_id -> steps elapsed in current phase
         self._timer: Dict[str, int] = {}
+        # intersection_id -> index into _CYCLE for round-robin tiebreaking
+        self._cycle_index: Dict[str, int] = {}
 
     # ------------------------------------------------------------------
     # Initialisation
@@ -52,6 +58,7 @@ class SignalScheduler:
         for iid in intersection_ids:
             self._phase[iid] = default_phase
             self._timer[iid] = 0
+            self._cycle_index[iid] = 0
 
     # ------------------------------------------------------------------
     # Queries
@@ -68,6 +75,23 @@ class SignalScheduler:
     def can_switch(self, intersection_id: str) -> bool:
         """Return True if minimum green time has been served (voluntary switch OK)."""
         return self._timer[intersection_id] >= self.min_green
+
+    def cycle_priority(self, intersection_id: str, direction: str) -> int:
+        """
+        Return a tiebreaker score for `direction` at this intersection.
+        Higher score = more preferred when car counts are equal.
+
+        Directions closer to the current cycle pointer score higher.
+        Example with pointer at index 1 ("S"):
+            "S" → distance 0 → priority -0  (most preferred)
+            "E" → distance 1 → priority -1
+            "W" → distance 2 → priority -2
+            "N" → distance 3 → priority -3  (least preferred)
+        """
+        idx = self._cycle_index.get(intersection_id, 0)
+        pos = _CYCLE.index(direction)
+        distance = (pos - idx) % 4
+        return -distance
 
     def must_switch(self, intersection_id: str) -> bool:
         """Return True if maximum green time is reached (switch is mandatory)."""
@@ -87,11 +111,15 @@ class SignalScheduler:
         Directly set the green phase to a specific direction and reset the timer.
         This method is used by the adaptive policy when it selects a specific
         target direction based on current traffic demand.
+        Also advances the round-robin cycle pointer past the chosen direction.
         """
         if new_phase not in ("N", "S", "E", "W"):
             raise ValueError(f"Invalid phase: {new_phase}")
         self._phase[intersection_id] = new_phase
         self._timer[intersection_id] = 0
+        # Advance cycle pointer to the direction after the one we just chose,
+        # so the next tiebreak starts from a fresh position.
+        self._cycle_index[intersection_id] = (_CYCLE.index(new_phase) + 1) % 4
 
     def switch(self, intersection_id: str) -> None:
         """
