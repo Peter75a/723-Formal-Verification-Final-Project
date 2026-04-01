@@ -63,7 +63,12 @@ class SignalPolicy:
 
         # Mandatory switch — phase has been on too long
         if self.scheduler.must_switch(intersection_id):
-            self.scheduler.switch(intersection_id)
+            other_directions = [d for d in ("N", "S", "E", "W") if d != current]
+            best_other = max(
+                other_directions,
+                key=lambda d: self._count_approaching(intersection_id, d, state),
+            )
+            self.scheduler.switch_to(intersection_id, best_other)
             return self.scheduler.get_phase(intersection_id)
 
         # Voluntary switch — look at traffic if minimum time served
@@ -77,7 +82,7 @@ class SignalPolicy:
             best_other_count = self._count_approaching(intersection_id, best_other, state)
 
             if best_other_count > current_count:
-                self.scheduler.switch(intersection_id)
+                self.scheduler.switch_to(intersection_id, best_other) # switch to the better phase
                 return self.scheduler.get_phase(intersection_id)
 
         # Keep current phase, advance timer
