@@ -169,6 +169,8 @@ class SignalPolicy:
             return []
         return [
             self.topology.get_segment_direction(seg_id)
-            for seg_id in inter.outgoing
+            for seg_id in inter.incoming
             if self.topology.get_segment_direction(seg_id) is not None
         ]
+    
+   
