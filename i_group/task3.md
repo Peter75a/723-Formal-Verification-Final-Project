@@ -2,15 +2,6 @@ You are a verification engineer, and we are currently in the final review stage 
 
 I have found an issue in the i-group code: it may generate signals for nonexistent directions.
 
-Specifically:
-- I00, I01, and I02 do not have a North (N) direction.
-- I10 do not have a West(W) direction
-- I22 do not have a East(E) direction
-- I12 do not have a East(E) direction
-- I20 do not have a West(W) and South(S) direction
-- I22 do not have a East(E) and South(S)direction
-- I21, and I22 do not have a South (S) direction.
-
 Your tasks are
 
 1. Go through the entire codebase and identify the root cause of this issue.
