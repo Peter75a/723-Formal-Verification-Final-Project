@@ -183,7 +183,7 @@ class Perception:
         has a GREEN signal for its direction — meaning it will actually cross
         this step and not merely wait at red.
 
-        Used to enforce the "at most 1 car crosses per step" rule.
+        Used to enforce the "at most 1 car crosses per intersection per step" rule.
 
         Args:
             intersection_id:  Target intersection.
@@ -202,6 +202,35 @@ class Perception:
             if green_dir is not None and car.direction == green_dir:
                 return True
         return False
+
+    def is_destination_slot_blocked(self, seg_id: str,
+                                    state: GlobalState,
+                                    exclude_car_id: int = -1) -> bool:
+        """
+        Return True if slot 0 of seg_id is already occupied by another active car.
+
+        Per spec: "at an intersection, a car can see other cars at the same
+        intersection." A car sitting at slot 0 of an outgoing segment is within
+        the intersection zone and visible to a car about to cross.
+
+        This check prevents two cars from entering the same destination slot
+        when crossing an intersection (collision at slot 0).
+
+        Args:
+            seg_id:          The outgoing segment the car intends to enter.
+            state:           Current global state.
+            exclude_car_id:  The querying car (excluded from the check).
+
+        Returns:
+            True if slot 0 of seg_id is taken; caller should STAY.
+        """
+        return any(
+            c.active
+            and c.car_id != exclude_car_id
+            and c.segment_id == seg_id
+            and c.slot == 0
+            for c in state.cars.values()
+        )
 
     # ------------------------------------------------------------------
     # Congestion sensing

@@ -1,0 +1,818 @@
+============================================================
+  ECEN 723 Traffic Simulation -- Phase B Integration
+  2 active car(s) target, 100 steps
+  Log file: /Users/ChrisHsieh1/Desktop/ecen723_26/723-Formal-Verification-Final-Project/simulator/logs/test1_safety_2cars_100steps.txt
+============================================================
+
+-- Step 0 --------------------------------------------
+   Signal I00: green=N
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=A_I00  slot= 0  visited=[-]  next=B
+   Car 2: STAY          seg=A_I00  slot= 1  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 1 --------------------------------------------
+   Signal I00: green=N
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=A_I00  slot= 0  visited=[-]  next=B
+   Car 2: STAY          seg=A_I00  slot= 1  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 2 --------------------------------------------
+   Signal I00: green=N
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=A_I00  slot= 0  visited=[-]  next=B
+   Car 2: STAY          seg=A_I00  slot= 1  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 3 --------------------------------------------
+   Signal I00: green=N
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=A_I00  slot= 0  visited=[-]  next=B
+   Car 2: STAY          seg=A_I00  slot= 1  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 4 --------------------------------------------
+   Signal I00: green=N
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=A_I00  slot= 0  visited=[-]  next=B
+   Car 2: STAY          seg=A_I00  slot= 1  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 5 --------------------------------------------
+   Signal I00: green=N
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=A_I00  slot= 0  visited=[-]  next=B
+   Car 2: STAY          seg=A_I00  slot= 1  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 6 --------------------------------------------
+   Signal I00: green=N
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=A_I00  slot= 0  visited=[-]  next=B
+   Car 2: STAY          seg=A_I00  slot= 1  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 7 --------------------------------------------
+   Signal I00: green=N
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=A_I00  slot= 0  visited=[-]  next=B
+   Car 2: STAY          seg=A_I00  slot= 1  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 8 --------------------------------------------
+   Signal I00: green=N
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=A_I00  slot= 0  visited=[-]  next=B
+   Car 2: STAY          seg=A_I00  slot= 1  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 9 --------------------------------------------
+   Signal I00: green=N
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=A_I00  slot= 0  visited=[-]  next=B
+   Car 2: STAY          seg=A_I00  slot= 1  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 10 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=A_I00  slot= 0  visited=[-]  next=B
+   Car 2: STRAIGHT      seg=I00_I01  slot= 0  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 11 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: MOVE          seg=A_I00  slot= 1  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot= 1  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 12 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STRAIGHT      seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot= 2  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 13 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot= 3  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 14 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot= 4  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 15 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot= 5  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 16 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot= 6  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 17 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot= 7  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 18 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot= 8  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 19 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot= 9  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 20 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=10  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 21 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=11  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 22 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=12  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 23 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=13  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 24 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=14  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 25 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=N
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=15  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 26 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=16  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 27 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=17  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 28 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=18  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 29 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=19  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 30 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=20  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 31 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=21  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 32 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=22  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 33 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=23  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 34 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=24  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 35 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=25  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 36 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=26  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 37 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=27  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 38 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=28  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 39 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=N
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I00_I01  slot=29  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 40 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: STAY          seg=I00_I01  slot= 0  visited=[-]  next=B
+   Car 2: STRAIGHT      seg=I01_I02  slot= 0  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 41 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot= 1  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot= 1  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 42 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot= 2  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot= 2  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 43 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot= 3  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot= 3  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 44 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot= 4  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot= 4  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 45 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot= 5  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot= 5  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 46 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot= 6  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot= 6  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 47 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot= 7  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot= 7  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 48 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot= 8  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot= 8  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 49 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot= 9  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot= 9  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 50 --------------------------------------------
+   Signal I00: green=E
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=10  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=10  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 51 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=11  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=11  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 52 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=12  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=12  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 53 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=13  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=13  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 54 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=14  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=14  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 55 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=15  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=15  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 56 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=16  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=16  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 57 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=17  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=17  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 58 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=18  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=18  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 59 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=19  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=19  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 60 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=20  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=20  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 61 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=21  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=21  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 62 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=22  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=22  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 63 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=23  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=23  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 64 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=24  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=24  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 65 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=25  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=25  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 66 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=26  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=26  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 67 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=W
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=27  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=27  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 68 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=W
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=28  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=28  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 69 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=W
+   Signal I11: green=S
+   Car 1: MOVE          seg=I00_I01  slot=29  visited=[-]  next=B
+   Car 2: MOVE          seg=I01_I02  slot=29  visited=[-]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 70 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=W
+   Signal I11: green=S
+   Car 1: STAY          seg=I00_I01  slot=29  visited=[-]  next=B
+   Car 2: TURN_RIGHT    seg=I02_I12  slot= 0  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 71 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=W
+   Signal I11: green=S
+   Car 1: STAY          seg=I00_I01  slot=29  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot= 1  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 72 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=W
+   Signal I11: green=S
+   Car 1: STAY          seg=I00_I01  slot=29  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot= 2  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 73 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=W
+   Signal I11: green=S
+   Car 1: STAY          seg=I00_I01  slot=29  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot= 3  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 74 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=W
+   Signal I11: green=S
+   Car 1: STAY          seg=I00_I01  slot=29  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot= 4  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 75 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=W
+   Signal I11: green=S
+   Car 1: STAY          seg=I00_I01  slot=29  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot= 5  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 76 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=W
+   Signal I11: green=S
+   Car 1: STAY          seg=I00_I01  slot=29  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot= 6  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 77 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=W
+   Signal I11: green=S
+   Car 1: STAY          seg=I00_I01  slot=29  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot= 7  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 78 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: STRAIGHT      seg=I01_I02  slot= 0  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot= 8  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 79 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I01_I02  slot= 1  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot= 9  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 80 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=S
+   Car 1: MOVE          seg=I01_I02  slot= 2  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=10  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 81 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot= 3  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=11  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 82 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot= 4  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=12  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 83 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot= 5  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=13  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 84 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot= 6  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=14  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 85 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot= 7  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=15  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 86 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot= 8  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=16  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 87 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot= 9  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=17  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 88 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot=10  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=18  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 89 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot=11  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=19  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 90 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot=12  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=20  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 91 --------------------------------------------
+   Signal I00: green=W
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot=13  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=21  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 92 --------------------------------------------
+   Signal I00: green=N
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot=14  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=22  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 93 --------------------------------------------
+   Signal I00: green=N
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot=15  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=23  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 94 --------------------------------------------
+   Signal I00: green=N
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot=16  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=24  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 95 --------------------------------------------
+   Signal I00: green=N
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot=17  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=25  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 96 --------------------------------------------
+   Signal I00: green=N
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot=18  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=26  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 97 --------------------------------------------
+   Signal I00: green=N
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot=19  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=27  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 98 --------------------------------------------
+   Signal I00: green=N
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot=20  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=28  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+-- Step 99 --------------------------------------------
+   Signal I00: green=N
+   Signal I01: green=E
+   Signal I11: green=E
+   Car 1: MOVE          seg=I01_I02  slot=21  visited=[-]  next=B
+   Car 2: MOVE          seg=I02_I12  slot=29  visited=[B]  next=C
+   Verify: CLEAN | v/i-group: AGREE
+
+============================================================
+Final Summary
+  Steps simulated   : 100 (200s = 0.056 hr)
+  Target fleet size : 2 cars
+  Completed tours   : 0
+  Throughput        : 0.0 tours/hr
+  Report mismatches : 0
+  v_group stats     : {'total_collisions': 0, 'total_red_light_violations': 0, 'total_wrong_way_violations': 0, 'total_illegal_turn_violations': 0, 'total_multi_crossing_violations': 0, 'total_completed_tours': 0}
+  i_group stats     : {'total_collisions': 0, 'total_red_light_violations': 0, 'total_wrong_way_violations': 0, 'total_multi_crossing_violations': 0}
+============================================================
+
+(Full output saved to: /Users/ChrisHsieh1/Desktop/ecen723_26/723-Formal-Verification-Final-Project/simulator/logs/test1_safety_2cars_100steps.txt)

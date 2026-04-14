@@ -168,6 +168,13 @@ class ActionStrategy:
         # Right-turn-at-red is already impossible here: step (a) ensured the
         # signal is green for this car's direction before reaching this point.
 
+        # (f) Destination slot check — slot 0 of the outgoing segment must be free.
+        # Per spec, a car at the intersection can see cars already in slot 0 of
+        # an outgoing segment (they are still within the intersection zone).
+        if self.perception.is_destination_slot_blocked(
+                next_seg.segment_id, state, exclude_car_id=car.car_id):
+            return CarAction(car_id=car.car_id, action="STAY")
+
         # ── Commit to crossing ────────────────────────────────────────
         intersections_in_use[intersection_id] = car.car_id
         return CarAction(car_id=car.car_id, action=turn_action)
@@ -204,7 +211,14 @@ class ActionStrategy:
                          if w not in car.destinations_visited
                          and w != dest_name]
             if not remaining:
-                dest_inter = "I00"  # head home
+                # All waypoints visited — go home to A.
+                # If already at I00, take the I00->A endpoint segment directly.
+                if intersection_id == "I00":
+                    home_seg = self.topology.get_segment("I00", "A")
+                    if home_seg and self.topology.is_valid_turn(
+                            car.direction, home_seg.direction):
+                        return home_seg
+                dest_inter = "I00"  # navigate to I00 first, then take A
             else:
                 # Nearest remaining
                 distances = self.planner._bfs_distances(intersection_id, state)
