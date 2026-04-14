@@ -1,0 +1,13 @@
+
+============================================================
+Final Summary
+  Steps simulated   : 400 (800s = 0.222 hr)
+  Target fleet size : 4 cars
+  Completed tours   : 4
+  Throughput        : 18.0 tours/hr
+  Report mismatches : 0
+  v_group stats     : {'total_collisions': 0, 'total_red_light_violations': 0, 'total_wrong_way_violations': 0, 'total_illegal_turn_violations': 0, 'total_multi_crossing_violations': 0, 'total_completed_tours': 4}
+  i_group stats     : {'total_collisions': 0, 'total_red_light_violations': 0, 'total_wrong_way_violations': 0, 'total_multi_crossing_violations': 0}
+============================================================
+
+(Full output saved to: /Users/ChrisHsieh1/Desktop/ecen723_26/723-Formal-Verification-Final-Project/simulator/logs/test2_extended_4cars_400steps.txt)
