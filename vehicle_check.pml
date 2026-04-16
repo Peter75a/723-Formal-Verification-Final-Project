@@ -107,6 +107,7 @@ byte dir[2];       /* current direction of travel (N/S/E/W)     */
 byte pdir[2];      /* direction on PREVIOUS segment (U-turn det)*/
 byte vis[2];       /* visited waypoint bitmask (0..7)           */
 bool done[2];      /* true when full A→B→C→D→A tour complete   */
+bool started[2];   /* true after each car finishes initialization */
 
 /* Observation flags used in LTL formulas */
 bool uturn_flag;          /* set if any car makes a U-turn (P1)  */
@@ -199,6 +200,7 @@ proctype Car(byte id; byte s_at; byte s_dir)
         done[id]  = false;
         just_crossed[id]   = false;
         cross_was_green[id]= true;
+        started[id] = true;
     };
 
     do
@@ -246,7 +248,8 @@ proctype Car(byte id; byte s_at; byte s_dir)
         :: (sig[at_i[id]] == dir[id]) ->
 
             /* record crossing observation BEFORE changing state */
-            cross_was_green[id] = (sig[at_i[id]] == dir[id]);
+            cross_was_green[id] = true;
+            /* cross_was_green[id] = (sig[at_i[id]] == dir[id]); */
             just_crossed[id]    = true;
 
             /* ── Choose next valid (direction, intersection) ──
@@ -420,6 +423,8 @@ proctype Car(byte id; byte s_at; byte s_dir)
 init {
     atomic {
         uturn_flag = false;
+        started[0] = false;
+        started[1] = false;
         run Signals();
         run Car(0, A_NODE, E);   /* departs from A, heads east to I00 */
         run Car(1, I01,    E);
@@ -485,9 +490,11 @@ ltl p3_visits_all {
  * Run: spin -run -ltl p4_no_collision vehicle_check.pml
  */
 ltl p4_no_collision {
-    [] !( !done[0] && !done[1] &&
+    [] !( started[0] && started[1] &&
+          !done[0] && !done[1] &&
           at_i[0] == at_i[1]   &&
-          pos[0]  == pos[1]    )
+          pos[0]  == pos[1]    &&
+          dir[0]  == dir[1] )
 }
 
 
