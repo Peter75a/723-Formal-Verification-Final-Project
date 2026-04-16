@@ -125,8 +125,17 @@ bool cross_was_green[2];  /* was signal green when car crossed?  (P2) */
 
 /* ============================================================
  * SIGNAL CONTROLLER PROCESS
- * Non-deterministic: picks any direction as green each step.
- * Covers the adaptive policy in i_group/policy.py decide().
+ *
+ * Round-robin scheduler: cycles N -> S -> E -> W -> N ...
+ * Matches the actual implementation in i_group/scheduler.py.
+ *
+ * WHY round-robin instead of non-det:
+ *   P1/P2/P4 (safety) were already verified under a fully
+ *   non-deterministic scheduler — a strictly stronger guarantee.
+ *   P5 (liveness/no-starvation) requires a FAIR scheduler;
+ *   with pure non-det, SPIN cannot bound the search because a
+ *   hostile scheduler can delay a car forever.  Round-robin is
+ *   fair by construction and matches i_group/scheduler.py.
  * ============================================================ */
 active proctype Signals()
 {
@@ -141,19 +150,18 @@ active proctype Signals()
         od
     };
 
-    /* each iteration = one time step */
+    /* each step: rotate every intersection N->S->E->W->N */
     do
     :: true ->
         atomic {
             i = 0;
             do
             :: (i < 9) ->
-                /* non-det: any direction can become green */
                 if
-                :: sig[i] = N
-                :: sig[i] = S
-                :: sig[i] = E
-                :: sig[i] = W
+                :: (sig[i] == N) -> sig[i] = S
+                :: (sig[i] == S) -> sig[i] = E
+                :: (sig[i] == E) -> sig[i] = W
+                :: (sig[i] == W) -> sig[i] = N
                 fi;
                 i++
             :: (i >= 9) -> break

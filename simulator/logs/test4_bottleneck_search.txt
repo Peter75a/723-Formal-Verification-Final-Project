@@ -1,0 +1,43 @@
+============================================================
+TEST 4: Bottleneck search
+  Cars range : 6 → 60, step=2
+  Each run   : 1800 steps = 1 simulated hour
+  On trigger : runs 5 more points, then jumps to 60 cars
+  Run time   : 2026-04-16 15:12:09
+============================================================
+    6 cars ->   33.0 tours/hr  [ok]
+    8 cars ->   42.0 tours/hr  [ok]
+   10 cars ->   46.0 tours/hr  [ok]
+   12 cars ->   48.0 tours/hr  [ok]
+   14 cars ->   47.0 tours/hr  [DROP]
+
+  *** throughput drop at 14 cars — running 5 more points ***
+
+   16 cars ->   46.0 tours/hr  [DROP]
+   18 cars ->   40.0 tours/hr  [DROP]
+   20 cars ->   43.0 tours/hr  [ok]
+   22 cars ->   43.0 tours/hr  [ok]
+   24 cars ->   39.0 tours/hr  [DROP]
+   60 cars ->   28.0 tours/hr  [DROP]
+
+------------------------------------------------------------
+  Best result : 12 cars -> 48.0 tours/hr
+  Bottleneck  : first triggered at 14 cars
+------------------------------------------------------------
+
+   Cars    Throughput  Collisions   RedLight  IllegalDir   U-turns  Status
+  -----  ------------  ----------  ---------  ----------  --------  ----------
+      6        33.0/hr           0          0           0         0  ok
+      8        42.0/hr           0          0           0         0  ok
+     10        46.0/hr           0          0           0         0  ok
+     12        48.0/hr           0          0           0         0  ok
+     14        47.0/hr           0          0           0         0  DROP <-- bottleneck
+     16        46.0/hr           0          0           0         0  DROP
+     18        40.0/hr           0          0           0         0  DROP
+     20        43.0/hr           0          0           0         0  ok
+     22        43.0/hr           0          0           0         0  ok
+     24        39.0/hr           0          0           0         0  DROP
+     60        28.0/hr           0          0           0         0  DROP
+
+  Log saved to: C:\Users\keren\723-Formal-Verification-Final-Project\simulator\logs\test4_bottleneck_search.txt
+============================================================
