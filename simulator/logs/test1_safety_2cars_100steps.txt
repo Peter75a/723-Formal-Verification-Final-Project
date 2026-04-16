@@ -1,7 +1,7 @@
 ============================================================
   ECEN 723 Traffic Simulation -- Phase B Integration
   2 active car(s) target, 100 steps
-  Log file: /Users/ChrisHsieh1/Desktop/ecen723_26/723-Formal-Verification-Final-Project/simulator/logs/test1_safety_2cars_100steps.txt
+  Log file: C:\Users\keren\723-Formal-Verification-Final-Project\simulator\logs\test1_safety_2cars_100steps.txt
 ============================================================
 
 -- Step 0 --------------------------------------------
@@ -815,4 +815,4 @@ Final Summary
   i_group stats     : {'total_collisions': 0, 'total_red_light_violations': 0, 'total_wrong_way_violations': 0, 'total_multi_crossing_violations': 0}
 ============================================================
 
-(Full output saved to: /Users/ChrisHsieh1/Desktop/ecen723_26/723-Formal-Verification-Final-Project/simulator/logs/test1_safety_2cars_100steps.txt)
+(Full output saved to: C:\Users\keren\723-Formal-Verification-Final-Project\simulator\logs\test1_safety_2cars_100steps.txt)

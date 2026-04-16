@@ -220,24 +220,160 @@ def test_throughput_6cars_1hour():
 
 
 # ---------------------------------------------------------------------------
+# Test 4: Bottleneck search -- increase cars until throughput drops or violations appear
+# ---------------------------------------------------------------------------
+
+def test_bottleneck_search(start_cars: int = 6, max_cars: int = 60, step_size: int = 2):
+    """
+    Sweep num_cars from start_cars up to max_cars (step = step_size).
+    Each run is 1800 steps (1 simulated hour).
+
+    When a stop condition is triggered (violation or throughput drop), continues
+    for 5 more data points before stopping, then always runs max_cars as the
+    extreme validation point.
+
+    Prints a summary table to console and saves full log to:
+        simulator/logs/test4_bottleneck_search.txt
+    """
+    import datetime
+
+    log_file = _log_path("test4_bottleneck_search.txt")
+
+    header_lines = [
+        "=" * 60,
+        "TEST 4: Bottleneck search",
+        f"  Cars range : {start_cars} → {max_cars}, step={step_size}",
+        f"  Each run   : 1800 steps = 1 simulated hour",
+        f"  On trigger : runs 5 more points, then jumps to {max_cars} cars",
+        f"  Run time   : {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+        "=" * 60,
+    ]
+
+    def emit(line: str = "") -> None:
+        """Print to console and append to log file."""
+        print(line)
+        with open(log_file, "a", encoding="utf-8") as f:
+            f.write(line + "\n")
+
+    # Clear / create log file
+    with open(log_file, "w", encoding="utf-8") as f:
+        f.write("")
+
+    for line in header_lines:
+        emit(line)
+
+    best_cars        = start_cars
+    best_throughput  = 0.0
+    prev_throughput  = 0.0
+    results          = []
+    triggered_at     = None
+
+    car_list = list(range(start_cars, max_cars + 1, step_size))
+    if car_list[-1] != max_cars:
+        car_list.append(max_cars)
+
+    i_car = 0
+    while i_car < len(car_list):
+        num_cars = car_list[i_car]
+        i_car += 1
+
+        _, _, _, sim = _make_sim()
+        summary = sim.run(steps=1800, num_cars=num_cars, verbose=False)
+
+        throughput = summary["throughput_per_hr"]
+        v  = summary["v_stats"]
+        i_s = summary["i_stats"]
+
+        violation_keys = [
+            "total_collisions",
+            "total_red_light_violations",
+            "total_wrong_way_violations",
+            "total_multi_crossing_violations",
+        ]
+        has_violation = (
+            any(v[k] > 0 or i_s[k] > 0 for k in violation_keys)
+            or v.get("total_illegal_turn_violations", 0) > 0
+            or summary["mismatches"] > 0
+        )
+
+        drop   = (len(results) > 0 and throughput < prev_throughput)
+        status = "VIOLATION" if has_violation else ("DROP" if drop else "ok")
+        results.append((num_cars, throughput, status, summary["v_stats"], summary["i_stats"]))
+
+        emit(f"  {num_cars:3d} cars -> {throughput:6.1f} tours/hr  [{status}]")
+
+        if triggered_at is None and (has_violation or drop):
+            triggered_at = num_cars
+            reason = "violation" if has_violation else "throughput drop"
+            emit(f"\n  *** {reason} at {num_cars} cars — running 5 more points ***\n")
+
+            next5    = list(range(num_cars + step_size,
+                                  num_cars + step_size * 6,
+                                  step_size))
+            remaining = [c for c in next5 if c < max_cars]
+            car_list  = remaining + [max_cars]
+            i_car     = 0
+            prev_throughput = throughput
+            continue
+
+        if throughput > best_throughput and status == "ok":
+            best_throughput = throughput
+            best_cars       = num_cars
+
+        prev_throughput = throughput
+
+    # Summary table
+    emit("")
+    emit("-" * 60)
+    emit(f"  Best result : {best_cars} cars -> {best_throughput} tours/hr")
+    if triggered_at:
+        emit(f"  Bottleneck  : first triggered at {triggered_at} cars")
+    emit("-" * 60)
+    emit("")
+    emit(f"  {'Cars':>5}  {'Throughput':>12}  {'Collisions':>10}  {'RedLight':>9}  {'IllegalDir':>10}  {'U-turns':>8}  Status")
+    emit(f"  {'-'*5}  {'-'*12}  {'-'*10}  {'-'*9}  {'-'*10}  {'-'*8}  {'-'*10}")
+    for cars, tput, status, v_s, i_s in results:
+        marker = " <-- bottleneck" if cars == triggered_at else ""
+        emit(
+            f"  {cars:>5}  {tput:>10.1f}/hr"
+            f"  {v_s['total_collisions']:>10}"
+            f"  {v_s['total_red_light_violations']:>9}"
+            f"  {v_s['total_wrong_way_violations']:>10}"
+            f"  {v_s.get('total_illegal_turn_violations', 0):>8}"
+            f"  {status}{marker}"
+        )
+
+    emit("")
+    emit(f"  Log saved to: {log_file}")
+    emit("=" * 60)
+
+    return best_cars, best_throughput, results
+
+
+# ---------------------------------------------------------------------------
 # Entry point: run all tests
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
+    import sys
     os.makedirs(_LOG_DIR, exist_ok=True)
 
-    results = {}
-    results["test1"] = test_safety_2cars_100steps()
-    results["test2"] = test_safety_extended_4cars_400steps()
-    results["test3"] = test_throughput_6cars_1hour()
+    # If called with --bottleneck, only run the bottleneck search
+    if "--bottleneck" in sys.argv:
+        test_bottleneck_search(start_cars=6, max_cars=60, step_size=2)
+    else:
+        results = {}
+        results["test1"] = test_safety_2cars_100steps()
+        results["test2"] = test_safety_extended_4cars_400steps()
+        results["test3"] = test_throughput_6cars_1hour()
 
-    print("\n" + "=" * 60)
-    print("ALL TESTS PASSED")
-    print(f"  Test 1 throughput : {results['test1']['throughput_per_hr']} tours/hr  (100 steps)")
-    print(f"  Test 2 throughput : {results['test2']['throughput_per_hr']} tours/hr  (400 steps)")
-    print(f"  Test 3 throughput : {results['test3']['throughput_per_hr']} tours/hr  (1800 steps)")
-    print(f"\nLog files written to: {_LOG_DIR}/")
-    print(f"  test1_safety_2cars_100steps.txt    <- use this in your report")
-    print(f"  test2_extended_4cars_400steps.txt")
-    print(f"  test3_throughput_6cars_1hour.txt   <- throughput figure for report")
-    print("=" * 60)
+        print("\n" + "=" * 60)
+        print("ALL TESTS PASSED")
+        print(f"  Test 1 throughput : {results['test1']['throughput_per_hr']} tours/hr  (100 steps)")
+        print(f"  Test 2 throughput : {results['test2']['throughput_per_hr']} tours/hr  (400 steps)")
+        print(f"  Test 3 throughput : {results['test3']['throughput_per_hr']} tours/hr  (1800 steps)")
+        print(f"\nLog files written to: {_LOG_DIR}/")
+        print(f"  test1_safety_2cars_100steps.txt    <- use this in your report")
+        print(f"  test2_extended_4cars_400steps.txt")
+        print(f"  test3_throughput_6cars_1hour.txt   <- throughput figure for report")
+        print("=" * 60)

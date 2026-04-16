@@ -10,4 +10,4 @@ Final Summary
   i_group stats     : {'total_collisions': 0, 'total_red_light_violations': 0, 'total_wrong_way_violations': 0, 'total_multi_crossing_violations': 0}
 ============================================================
 
-(Full output saved to: /Users/ChrisHsieh1/Desktop/ecen723_26/723-Formal-Verification-Final-Project/simulator/logs/test3_throughput_6cars_1hour.txt)
+(Full output saved to: C:\Users\keren\723-Formal-Verification-Final-Project\simulator\logs\test3_throughput_6cars_1hour.txt)
