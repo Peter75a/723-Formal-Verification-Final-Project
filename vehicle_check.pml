@@ -18,11 +18,11 @@
  *   Signal controller     →  non-deterministic (worst-case schedule)
  *
  * GRID LAYOUT (shared/topology.py):
- *   I00(0)--I01(1)--I02(2)=B
- *    |        |        |
- *   I10(3)--I11(4)--I12(5)
- *    |        |        |
- *   I20(6)=D-I21(7)--I22(8)=C
+ *  A(9)- I00(0)--I01(1)--I02(2)=B
+ *           |        |        |
+ *        I10(3)--I11(4)--I12(5)
+ *          |        |        |
+ *       I20(6)=D-I21(7)--I22(8)=C
  *
  * PROPERTIES VERIFIED:
  *   P1 (safety)   : No vehicle makes a U-turn
@@ -74,13 +74,14 @@
 #define I20 6   /* = waypoint D */
 #define I21 7
 #define I22 8   /* = waypoint C */
-
+#define A_NODE 9
 /* A endpoint  (shared/topology.py _build_endpoint_segments)
  * Square node 1/30 mile west of I00 — 2 slots at 30 mph = 1 step each way.
  * NOT a circle intersection: no signal, no turn choices.
  * Arriving here = tour complete.
  */
-#define A_NODE 9
+
+
 
 /* Waypoint bitmask  (shared/topology.py WAYPOINT_INTERSECTIONS) */
 #define HAS_B 1   /* bit 0 = visited I02 */
@@ -187,8 +188,9 @@ active proctype Signals()
  * ============================================================ */
 proctype Car(byte id; byte s_at; byte s_dir)
 {
-    byte nd;   /* chosen next direction after crossing */
-    byte ni;   /* next intersection after crossing     */
+    byte nd;
+   byte ni;
+   byte target;
 
     /* --- initialise car state --- */
     atomic {
@@ -204,16 +206,13 @@ proctype Car(byte id; byte s_at; byte s_dir)
     };
 
     do
-    :: done[id] -> break   /* tour complete — exit loop */
+    :: done[id] -> skip  /* tour complete — exit loop */
 
     /* ── ON_SEG: non-det advance or stay (car-ahead blocked)
      * Abstracts slots 0..28 from strategy.py:123-126
      * ── */
-    :: (pos[id] == ON_SEG) ->
-        if
-        :: pos[id] = APPROACH   /* move forward to last slot */
-        :: skip                 /* stay blocked by car ahead  */
-        fi
+  :: (pos[id] == ON_SEG) ->
+    pos[id] = APPROACH
 
     /* ── APPROACH: handle A endpoint OR check signal at intersection
      * Directly models strategy.py:132-135 (endpoint = just MOVE, no signal)
@@ -221,14 +220,51 @@ proctype Car(byte id; byte s_at; byte s_dir)
      * ── */
     :: (pos[id] == APPROACH) ->
         just_crossed[id] = false;
+        :: (pos[id] == APPROACH) ->
+    just_crossed[id] = false;
+
+      if
+      :: (at_i[id] == I02) -> vis[id] = vis[id] | HAS_B;
+      :: else -> skip;
+      fi;
+
+      if
+      :: (at_i[id] == I20) -> vis[id] = vis[id] | HAS_D;
+      :: else -> skip;
+      fi;
+
+      if
+      :: (at_i[id] == I22) -> vis[id] = vis[id] | HAS_C;
+      :: else -> skip;
+      fi;
+
+      if
+      :: ((vis[id] & HAS_B) == 0) -> target = I02;
+      :: ((vis[id] & HAS_D) == 0) -> target = I20;
+      :: ((vis[id] & HAS_C) == 0) -> target = I22;
+      :: else -> target = A_NODE;
+      fi;
+      if
+         :: ((vis[id] & HAS_B) == 0) -> target = I02
+         :: ((vis[id] & HAS_D) == 0) -> target = I20
+         :: ((vis[id] & HAS_C) == 0) -> target = I22
+         :: else -> target = A_NODE
+      fi;
 
         if
         /* ── A_NODE: short 1/30-mile segment ends at A (not an intersection).
          * No signal check needed — strategy.py:132 is_intersection() == False.
          * Arriving at A means the full A→B→C→D→A tour is complete.
          * ── */
-        :: (at_i[id] == A_NODE) ->
-            done[id] = true
+       :: (at_i[id] == A_NODE) ->
+         if
+      :: (vis[id] == ALL_W) ->
+        done[id] = true
+      :: else ->
+        at_i[id] = I00;
+        dir[id]  = E;
+        pos[id]  = ON_SEG
+      fi
 
         /* ── Circle intersection: check signal ── */
         :: (at_i[id] != A_NODE) ->
@@ -252,131 +288,114 @@ proctype Car(byte id; byte s_at; byte s_dir)
             /* cross_was_green[id] = (sig[at_i[id]] == dir[id]); */
             just_crossed[id]    = true;
 
-            /* ── Choose next valid (direction, intersection) ──
-             * Enumerated from topology.py for every reachable
-             * (intersection, incoming-direction) pair.
-             * U-turns are excluded from every branch.
-             */
+            /* ── Update visited waypoint BEFORE planning next target ──
+            * This matches the Python strategy idea:
+            * when the car reaches a destination intersection, it chooses
+            * the next destination before choosing the next segment.
+            */
+            if
+            :: (at_i[id] == I02) -> vis[id] = vis[id] | HAS_B
+            :: (at_i[id] == I20) -> vis[id] = vis[id] | HAS_D
+            :: (at_i[id] == I22) -> vis[id] = vis[id] | HAS_C
+            :: else -> skip
+            fi;
+
+            /* ── Choose target: abstract the BFS planner result ──
+            * Python chooses the closest unvisited waypoint; this model uses
+            * a fixed lightweight order B -> D -> C -> A to avoid BFS state explosion.
+            */
+            if
+            :: ((vis[id] & HAS_B) == 0) -> target = I02
+            :: ((vis[id] & HAS_D) == 0) -> target = I20
+            :: ((vis[id] & HAS_C) == 0) -> target = I22
+            :: else -> target = A_NODE
+            fi;
+
+            /* ── Target-directed routing.
+            * This replaces full non-deterministic routing with a compact
+            * BFS-effect abstraction: choose a next edge that moves toward target.
+            */
+
             if
 
-            /* ===== I00 ===== outgoing: E→I01, S→I10, W→A_NODE(return) */
-            :: (at_i[id]==I00 && dir[id]==E) ->   /* came from A: go east or south */
-               if :: nd=E; ni=I01
-                  :: nd=S; ni=I10
-               fi
-            :: (at_i[id]==I00 && dir[id]==N) ->   /* came from I10: go east OR return to A */
+            /* ===== currently at I00 ===== */
+            :: (at_i[id] == I00) ->
                if
-               :: nd=E; ni=I01                    /* continue into grid */
-               :: (vis[id]==ALL_W) -> nd=W; ni=A_NODE  /* all done: head home */
+               :: (target == I02) -> nd = E; ni = I01
+               :: (target == I20) -> nd = S; ni = I10
+               :: (target == I22) -> nd = E; ni = I01
+               :: (target == A_NODE) -> nd = W; ni = A_NODE
                fi
-            :: (at_i[id]==I00 && dir[id]==W) ->   /* came from I01: go south OR return to A */
+
+            /* ===== currently at I01 ===== */
+            :: (at_i[id] == I01) ->
                if
-               :: nd=S; ni=I10                    /* continue into grid */
-               :: (vis[id]==ALL_W) -> nd=W; ni=A_NODE  /* all done: head home */
+               :: (target == I02) -> nd = E; ni = I02
+               :: (target == I20) -> nd = S; ni = I11
+               :: (target == I22) -> nd = E; ni = I02
+               :: (target == A_NODE) -> nd = W; ni = I00
                fi
 
-            /* ===== I01 ===== outgoing: E→I02, W→I00, S→I11 */
-            :: (at_i[id]==I01 && dir[id]==E) ->   /* came from I00 */
-               if :: nd=E; ni=I02
-                  :: nd=S; ni=I11
-               fi
-            :: (at_i[id]==I01 && dir[id]==W) ->   /* came from I02 */
-               if :: nd=W; ni=I00
-                  :: nd=S; ni=I11
-               fi
-            :: (at_i[id]==I01 && dir[id]==S) ->   /* came from I11 */
-               if :: nd=E; ni=I02
-                  :: nd=W; ni=I00
-                  :: nd=S; ni=I11
-               fi
-            :: (at_i[id]==I01 && dir[id]==N) ->   /* came from I11 going N */
-               if :: nd=E; ni=I02
-                  :: nd=W; ni=I00
+            /* ===== currently at I02 = B ===== */
+            :: (at_i[id] == I02) ->
+               if
+               :: (target == I20) -> nd = S; ni = I12
+               :: (target == I22) -> nd = S; ni = I12
+               :: (target == A_NODE) -> nd = W; ni = I01
                fi
 
-            /* ===== I02 = B ===== outgoing: W→I01, S→I12 */
-            :: (at_i[id]==I02 && dir[id]==E) ->   /* came from I01 */
-               nd=S; ni=I12                        /* only valid (W=U-turn) */
-            :: (at_i[id]==I02 && dir[id]==N) ->   /* came from I12 */
-               nd=W; ni=I01                        /* only valid (S=U-turn) */
-
-            /* ===== I10 ===== outgoing: N→I00, E→I11, S→I20 */
-            :: (at_i[id]==I10 && dir[id]==S) ->   /* came from I00 */
-               if :: nd=E; ni=I11
-                  :: nd=S; ni=I20
-               fi
-            :: (at_i[id]==I10 && dir[id]==N) ->   /* came from I20 */
-               if :: nd=N; ni=I00
-                  :: nd=E; ni=I11
-               fi
-            :: (at_i[id]==I10 && dir[id]==W) ->   /* came from I11 */
-               if :: nd=N; ni=I00
-                  :: nd=S; ni=I20
+            /* ===== currently at I10 ===== */
+            :: (at_i[id] == I10) ->
+               if
+               :: (target == I02) -> nd = N; ni = I00
+               :: (target == I20) -> nd = S; ni = I20
+               :: (target == I22) -> nd = E; ni = I11
+               :: (target == A_NODE) -> nd = N; ni = I00
                fi
 
-            /* ===== I11 ===== outgoing: N→I01, E→I12, W→I10, S→I21 */
-            :: (at_i[id]==I11 && dir[id]==E) ->   /* came from I10 */
-               if :: nd=N; ni=I01
-                  :: nd=E; ni=I12
-                  :: nd=S; ni=I21
-               fi
-            :: (at_i[id]==I11 && dir[id]==W) ->   /* came from I12 */
-               if :: nd=N; ni=I01
-                  :: nd=W; ni=I10
-                  :: nd=S; ni=I21
-               fi
-            :: (at_i[id]==I11 && dir[id]==N) ->   /* came from I21 */
-               if :: nd=N; ni=I01
-                  :: nd=E; ni=I12
-                  :: nd=W; ni=I10
-               fi
-            :: (at_i[id]==I11 && dir[id]==S) ->   /* came from I01 */
-               if :: nd=E; ni=I12
-                  :: nd=W; ni=I10
-                  :: nd=S; ni=I21
+            /* ===== currently at I11 ===== */
+            :: (at_i[id] == I11) ->
+               if
+               :: (target == I02) -> nd = N; ni = I01
+               :: (target == I20) -> nd = W; ni = I10
+               :: (target == I22) -> nd = E; ni = I12
+               :: (target == A_NODE) -> nd = N; ni = I01
                fi
 
-            /* ===== I12 ===== outgoing: N→I02, W→I11, S→I22 */
-            :: (at_i[id]==I12 && dir[id]==S) ->   /* came from I02 */
-               if :: nd=W; ni=I11
-                  :: nd=S; ni=I22
-               fi
-            :: (at_i[id]==I12 && dir[id]==N) ->   /* came from I22 */
-               if :: nd=N; ni=I02
-                  :: nd=W; ni=I11
-               fi
-            :: (at_i[id]==I12 && dir[id]==E) ->   /* came from I11 */
-               if :: nd=N; ni=I02
-                  :: nd=S; ni=I22
+            /* ===== currently at I12 ===== */
+            :: (at_i[id] == I12) ->
+               if
+               :: (target == I02) -> nd = N; ni = I02
+               :: (target == I20) -> nd = W; ni = I11
+               :: (target == I22) -> nd = S; ni = I22
+               :: (target == A_NODE) -> nd = W; ni = I11
                fi
 
-            /* ===== I20 = D ===== outgoing: N→I10, E→I21 */
-            :: (at_i[id]==I20 && dir[id]==S) ->   /* came from I10 */
-               nd=E; ni=I21                        /* only valid (N=U-turn) */
-            :: (at_i[id]==I20 && dir[id]==W) ->   /* came from I21 */
-               nd=N; ni=I10                        /* only valid (E=U-turn) */
-
-            /* ===== I21 ===== outgoing: N→I11, E→I22, W→I20 */
-            :: (at_i[id]==I21 && dir[id]==S) ->   /* came from I11 */
-               if :: nd=E; ni=I22
-                  :: nd=W; ni=I20
-               fi
-            :: (at_i[id]==I21 && dir[id]==E) ->   /* came from I20 */
-               if :: nd=N; ni=I11
-                  :: nd=E; ni=I22
-               fi
-            :: (at_i[id]==I21 && dir[id]==W) ->   /* came from I22 */
-               if :: nd=N; ni=I11
-                  :: nd=W; ni=I20
+            /* ===== currently at I20 = D ===== */
+            :: (at_i[id] == I20) ->
+               if
+               :: (target == I22) -> nd = E; ni = I21
+               :: (target == A_NODE) -> nd = N; ni = I10
+               :: else -> nd = E; ni = I21
                fi
 
-            /* ===== I22 = C ===== outgoing: N→I12, W→I21 */
-            :: (at_i[id]==I22 && dir[id]==S) ->   /* came from I12 */
-               nd=W; ni=I21                        /* only valid (N=U-turn) */
-            :: (at_i[id]==I22 && dir[id]==E) ->   /* came from I21 */
-               nd=N; ni=I12                        /* only valid (W=U-turn) */
+            /* ===== currently at I21 ===== */
+            :: (at_i[id] == I21) ->
+               if
+               :: (target == I02) -> nd = N; ni = I11
+               :: (target == I20) -> nd = W; ni = I20
+               :: (target == I22) -> nd = E; ni = I22
+               :: (target == A_NODE) -> nd = N; ni = I11
+               fi
 
-            fi; /* end direction choice */
+            /* ===== currently at I22 = C ===== */
+            :: (at_i[id] == I22) ->
+               if
+               :: (target == A_NODE) -> nd = N; ni = I12
+               :: else -> nd = W; ni = I21
+               fi
+
+            fi;
 
             /* ── Detect U-turn (should NEVER trigger; guards above
              * exclude all opposite-direction choices)
@@ -387,17 +406,7 @@ proctype Car(byte id; byte s_at; byte s_dir)
             :: else                  -> skip
             fi;
 
-            /* ── Update visited waypoints ──
-             * Records the intersection we are LEAVING (at_i[id])
-             * before we update it, matching strategy.py visit logic
-             * ── */
-            if
-            :: (at_i[id] == I02) -> vis[id] = vis[id] | HAS_B
-            :: (at_i[id] == I20) -> vis[id] = vis[id] | HAS_D
-            :: (at_i[id] == I22) -> vis[id] = vis[id] | HAS_C
-            :: else -> skip
-            fi;
-
+        
             /* ── Advance to next node ── */
             pdir[id]  = dir[id];
             dir[id]   = nd;
