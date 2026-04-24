@@ -1,0 +1,61 @@
+never p1_no_uturn {    /* !([] (! (uturn_flag))) */
+T0_init:
+	do
+	:: atomic { (! ((! (uturn_flag)))) -> assert(!(! ((! (uturn_flag))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never p2_no_redlight {    /* !([] (((! (just_crossed[0])) || (cross_was_green[0])) && ((! (just_crossed[1])) || (cross_was_green[1])))) */
+T0_init:
+	do
+	:: atomic { (! ((((! (just_crossed[0])) || (cross_was_green[0])) && ((! (just_crossed[1])) || (cross_was_green[1]))))) -> assert(!(! ((((! (just_crossed[0])) || (cross_was_green[0])) && ((! (just_crossed[1])) || (cross_was_green[1])))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never p3_visits_all {    /* !((<> (done[0])) && (<> (done[1]))) */
+accept_init:
+T0_init:
+	do
+	:: (! ((done[1]))) -> goto accept_S2
+	:: (! ((done[0]))) -> goto accept_S5
+	od;
+accept_S2:
+T0_S2:
+	do
+	:: (! ((done[1]))) -> goto accept_S2
+	od;
+accept_S5:
+T0_S5:
+	do
+	:: (! ((done[0]))) -> goto accept_S5
+	od;
+}
+never p4_no_collision {    /* !([] (! (((((((started[0]) && (started[1])) && (! (done[0]))) && (! (done[1]))) && ((at_i[0]==at_i[1]))) && ((pos[0]==pos[1]))) && ((dir[0]==dir[1]))))) */
+T0_init:
+	do
+	:: atomic { (! ((! (((((((started[0]) && (started[1])) && (! (done[0]))) && (! (done[1]))) && ((at_i[0]==at_i[1]))) && ((pos[0]==pos[1]))) && ((dir[0]==dir[1])))))) -> assert(!(! ((! (((((((started[0]) && (started[1])) && (! (done[0]))) && (! (done[1]))) && ((at_i[0]==at_i[1]))) && ((pos[0]==pos[1]))) && ((dir[0]==dir[1]))))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never p5_no_starvation {    /* !([] (((! ((pos[0]==1))) || (<> (((pos[0]==0)) || (done[0])))) && ((! ((pos[1]==1))) || (<> (((pos[1]==0)) || (done[1])))))) */
+T0_init:
+	do
+	:: (! ((! ((pos[1]==1)))) && ! ((((pos[1]==0)) || (done[1])))) -> goto accept_S5
+	:: (! ((! ((pos[0]==1)))) && ! ((((pos[0]==0)) || (done[0])))) -> goto accept_S10
+	:: (1) -> goto T0_init
+	od;
+accept_S5:
+	do
+	:: (! ((((pos[1]==0)) || (done[1])))) -> goto accept_S5
+	od;
+accept_S10:
+	do
+	:: (! ((((pos[0]==0)) || (done[0])))) -> goto accept_S10
+	od;
+}
