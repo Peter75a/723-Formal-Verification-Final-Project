@@ -362,7 +362,7 @@ proctype Car(byte id; byte s_at; byte s_dir)
                             at_i[id] = ni;
                             pos[id]  = ON_SEG;
 
-                            /* ⭐release segment（old_i！） */
+                            /* release segment（old_i！） */
                             if
                             :: VALID_NODE(old_i) ->
                                 SEG(old_i, old_d) = false
@@ -396,7 +396,7 @@ proctype Car(byte id; byte s_at; byte s_dir)
                                 at_i[id] = ni;
                                 pos[id]  = ON_SEG;
 
-                                /* ⭐ release old segment */
+                                /* release old segment */
                                 if
                                 :: VALID_NODE(old_i) ->
                                     SEG(old_i, old_d) = false
