@@ -1,0 +1,36 @@
+============================================================
+  p4_topology_valid_original  (signal_check_corner.pml, )  -- SAFETY
+============================================================
+ltl p4_topology_valid: [] (((phase==1)) || ((phase==2)))
+warning: never claim + accept labels requires -a flag to fully verify
+pan:1: assertion violated  !( !(((phase==1)||(phase==2)))) (at depth 0)
+pan: wrote signal_check_corner.pml.trail
+
+(Spin Version 6.5.2 -- 6 December 2019)
+Warning: Search not completed
+	+ Partial Order Reduction
+
+Full statespace search for:
+	never claim         	+ (p4_topology_valid)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	- (not selected)
+	invalid end states	- (disabled by never claim)
+
+State-vector 36 byte, depth reached 0, errors: 1
+        1 states, stored
+        0 states, matched
+        1 transitions (= stored+matched)
+        0 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    0.000	equivalent memory usage for states (stored*(State-vector + overhead))
+    0.286	actual memory usage for states
+  128.000	memory used for hash table (-w24)
+    0.534	memory used for DFS stack (-m10000)
+  128.730	total actual memory usage
+
+
+
+pan: elapsed time 0 seconds
+

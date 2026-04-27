@@ -1,0 +1,41 @@
+============================================================
+  p3_one_green  (signal_check.pml, -DSEL_p3_one_green)  -- SAFETY
+============================================================
+ltl p3_one_green: [] (((((((green_N) && (! (green_S))) && (! (green_E))) && (! (green_W))) || ((((! (green_N)) && (green_S)) && (! (green_E))) && (! (green_W)))) || ((((! (green_N)) && (! (green_S))) && (green_E)) && (! (green_W)))) || ((((! (green_N)) && (! (green_S))) && (! (green_E))) && (green_W)))
+warning: never claim + accept labels requires -a flag to fully verify
+
+(Spin Version 6.5.2 -- 6 December 2019)
+	+ Partial Order Reduction
+
+Full statespace search for:
+	never claim         	+ (p3_one_green)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	- (not selected)
+	invalid end states	- (disabled by never claim)
+
+State-vector 36 byte, depth reached 3633, errors: 0
+      208 states, stored
+        1 states, matched
+      209 transitions (= stored+matched)
+     3218 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    0.013	equivalent memory usage for states (stored*(State-vector + overhead))
+    0.286	actual memory usage for states
+  128.000	memory used for hash table (-w24)
+    0.534	memory used for DFS stack (-m10000)
+  128.730	total actual memory usage
+
+
+unreached in proctype Controller
+	signal_check.pml:137, state 46, "-end-"
+	(1 of 46 states)
+unreached in init
+	(0 of 2 states)
+unreached in claim p3_one_green
+	_spin_nvr.tmp:8, state 10, "-end-"
+	(1 of 10 states)
+
+pan: elapsed time 0 seconds
+

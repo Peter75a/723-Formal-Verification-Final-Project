@@ -1,0 +1,48 @@
+============================================================
+  p4_topology_valid_fixed  (signal_check_corner_fixed.pml, )  -- SAFETY
+============================================================
+ltl p4_topology_valid: [] (((phase==1)) || ((phase==2)))
+warning: never claim + accept labels requires -a flag to fully verify
+
+(Spin Version 6.5.2 -- 6 December 2019)
+	+ Partial Order Reduction
+
+Full statespace search for:
+	never claim         	+ (p4_topology_valid)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	- (not selected)
+	invalid end states	- (disabled by never claim)
+
+State-vector 36 byte, depth reached 1990, errors: 0
+      126 states, stored
+        1 states, matched
+      127 transitions (= stored+matched)
+     1739 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    0.008	equivalent memory usage for states (stored*(State-vector + overhead))
+    0.286	actual memory usage for states
+  128.000	memory used for hash table (-w24)
+    0.534	memory used for DFS stack (-m10000)
+  128.730	total actual memory usage
+
+
+unreached in proctype Controller
+	signal_check_corner_fixed.pml:112, state 16, "best_dist = dist"
+	signal_check_corner_fixed.pml:113, state 18, "(1)"
+	signal_check_corner_fixed.pml:74, state 32, "cycle_index = ((best+1)%4)"
+	signal_check_corner_fixed.pml:75, state 33, "green_N = (best==0)"
+	signal_check_corner_fixed.pml:76, state 34, "green_S = (best==1)"
+	signal_check_corner_fixed.pml:77, state 35, "green_E = (best==2)"
+	signal_check_corner_fixed.pml:78, state 36, "green_W = (best==3)"
+	signal_check_corner_fixed.pml:130, state 55, "-end-"
+	(8 of 55 states)
+unreached in init
+	(0 of 2 states)
+unreached in claim p4_topology_valid
+	_spin_nvr.tmp:8, state 10, "-end-"
+	(1 of 10 states)
+
+pan: elapsed time 0 seconds
+

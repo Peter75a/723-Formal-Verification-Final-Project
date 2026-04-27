@@ -1,0 +1,60 @@
+============================================================
+  p1_eventually_N  (signal_check.pml, -DSEL_p1_N)  -- LIVENESS, weak fairness
+============================================================
+ltl p1_eventually_N: <> ((phase==0))
+
+(Spin Version 6.5.2 -- 6 December 2019)
+	+ Partial Order Reduction
+
+Full statespace search for:
+	never claim         	+ (p1_eventually_N)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 36 byte, depth reached 0, errors: 0
+        1 states, stored
+        0 states, matched
+        1 transitions (= stored+matched)
+        0 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    0.000	equivalent memory usage for states (stored*(State-vector + overhead))
+    0.287	actual memory usage for states
+  128.000	memory used for hash table (-w24)
+    0.534	memory used for DFS stack (-m10000)
+  128.730	total actual memory usage
+
+
+unreached in proctype Controller
+	signal_check.pml:107, state 3, "best_dist = 0"
+	signal_check.pml:108, state 4, "d = 0"
+	signal_check.pml:118, state 12, "best = d"
+	signal_check.pml:119, state 13, "best_dist = dist"
+	signal_check.pml:122, state 16, "best_dist = dist"
+	signal_check.pml:123, state 18, "(1)"
+	signal_check.pml:116, state 19, "(!(found))"
+	signal_check.pml:116, state 19, "((found&&(dist<best_dist)))"
+	signal_check.pml:116, state 19, "else"
+	signal_check.pml:125, state 22, "(1)"
+	signal_check.pml:113, state 23, "((d!=phase))"
+	signal_check.pml:113, state 23, "else"
+	signal_check.pml:110, state 26, "((d==4))"
+	signal_check.pml:110, state 26, "((d<4))"
+	signal_check.pml:76, state 32, "cycle_index = ((best+1)%4)"
+	signal_check.pml:77, state 33, "green_N = (best==0)"
+	signal_check.pml:78, state 34, "green_S = (best==1)"
+	signal_check.pml:79, state 35, "green_E = (best==2)"
+	signal_check.pml:80, state 36, "green_W = (best==3)"
+	signal_check.pml:137, state 46, "-end-"
+	(16 of 46 states)
+unreached in init
+	signal_check.pml:140, state 2, "-end-"
+	(1 of 2 states)
+unreached in claim p1_eventually_N
+	_spin_nvr.tmp:6, state 6, "-end-"
+	(1 of 6 states)
+
+pan: elapsed time 0 seconds
+

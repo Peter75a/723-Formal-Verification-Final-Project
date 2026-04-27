@@ -1,0 +1,40 @@
+============================================================
+  p1_eventually_W  (signal_check.pml, -DSEL_p1_W)  -- LIVENESS, weak fairness
+============================================================
+ltl p1_eventually_W: <> ((phase==3))
+
+(Spin Version 6.5.2 -- 6 December 2019)
+	+ Partial Order Reduction
+
+Full statespace search for:
+	never claim         	+ (p1_eventually_W)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 36 byte, depth reached 2139, errors: 0
+      126 states, stored (249 visited)
+      121 states, matched
+      370 transitions (= visited+matched)
+     3762 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    0.008	equivalent memory usage for states (stored*(State-vector + overhead))
+    0.287	actual memory usage for states
+  128.000	memory used for hash table (-w24)
+    0.534	memory used for DFS stack (-m10000)
+  128.730	total actual memory usage
+
+
+unreached in proctype Controller
+	signal_check.pml:137, state 46, "-end-"
+	(1 of 46 states)
+unreached in init
+	(0 of 2 states)
+unreached in claim p1_eventually_W
+	_spin_nvr.tmp:6, state 6, "-end-"
+	(1 of 6 states)
+
+pan: elapsed time 0 seconds
+
