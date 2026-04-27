@@ -1,0 +1,2805 @@
+ltl p1_no_uturn: [] (! (uturn_flag))
+ltl p2_no_redlight: [] (((! (just_crossed[0])) || (cross_was_green[0])) && ((! (just_crossed[1])) || (cross_was_green[1])))
+ltl p3_visits_all: <> ((vis[0]==7))
+ltl p4_no_collision: [] (! (((((((started[0]) && (started[1])) && (! (done[0]))) && (! (done[1]))) && ((at_i[0]==at_i[1]))) && ((pos[0]==pos[1]))) && ((dir[0]==dir[1]))))
+ltl p5_no_starvation: [] ((! ((pos[0]==1))) || (<> (((pos[0]==0)) || (done[0]))))
+starting claim 7
+Never claim moves to line 38	[(1)]
+  2:	proc  0 (:init::1) vehicle_check.pml:439 (state 1)	[uturn_flag = 0]
+  2:	proc  0 (:init::1) vehicle_check.pml:440 (state 2)	[started[0] = 0]
+  2:	proc  0 (:init::1) vehicle_check.pml:441 (state 3)	[started[1] = 0]
+Starting Signals with pid 2
+  3:	proc  0 (:init::1) vehicle_check.pml:442 (state 4)	[(run Signals())]
+Starting Car with pid 3
+  4:	proc  0 (:init::1) vehicle_check.pml:443 (state 5)	[(run Car(0,9,2))]
+  6:	proc  2 (Car:1) vehicle_check.pml:196 (state 1)	[at_i[id] = s_at]
+		at_i[0] = 9
+		at_i[1] = 0
+  6:	proc  2 (Car:1) vehicle_check.pml:197 (state 2)	[dir[id] = s_dir]
+		at_i[0] = 9
+		at_i[1] = 0
+		dir[0] = 2
+		dir[1] = 0
+  6:	proc  2 (Car:1) vehicle_check.pml:198 (state 3)	[pdir[id] = s_dir]
+		at_i[0] = 9
+		at_i[1] = 0
+		dir[0] = 2
+		dir[1] = 0
+		pdir[0] = 2
+		pdir[1] = 0
+  6:	proc  2 (Car:1) vehicle_check.pml:199 (state 4)	[pos[id] = 0]
+		at_i[0] = 9
+		at_i[1] = 0
+		dir[0] = 2
+		dir[1] = 0
+		pdir[0] = 2
+		pdir[1] = 0
+  6:	proc  2 (Car:1) vehicle_check.pml:200 (state 5)	[vis[id] = 0]
+		at_i[0] = 9
+		at_i[1] = 0
+		dir[0] = 2
+		dir[1] = 0
+		pdir[0] = 2
+		pdir[1] = 0
+  6:	proc  2 (Car:1) vehicle_check.pml:201 (state 6)	[done[id] = 0]
+		at_i[0] = 9
+		at_i[1] = 0
+		dir[0] = 2
+		dir[1] = 0
+		pdir[0] = 2
+		pdir[1] = 0
+  6:	proc  2 (Car:1) vehicle_check.pml:202 (state 7)	[just_crossed[id] = 0]
+		at_i[0] = 9
+		at_i[1] = 0
+		dir[0] = 2
+		dir[1] = 0
+		pdir[0] = 2
+		pdir[1] = 0
+  6:	proc  2 (Car:1) vehicle_check.pml:203 (state 8)	[cross_was_green[id] = 1]
+		at_i[0] = 9
+		at_i[1] = 0
+		dir[0] = 2
+		dir[1] = 0
+		pdir[0] = 2
+		pdir[1] = 0
+		cross_was_green[0] = 1
+		cross_was_green[1] = 0
+  6:	proc  2 (Car:1) vehicle_check.pml:204 (state 9)	[started[id] = 1]
+		at_i[0] = 9
+		at_i[1] = 0
+		dir[0] = 2
+		dir[1] = 0
+		pdir[0] = 2
+		pdir[1] = 0
+		started[0] = 1
+		started[1] = 0
+		cross_was_green[0] = 1
+		cross_was_green[1] = 0
+  8:	proc  2 (Car:1) vehicle_check.pml:210 (state 13)	[((pos[id]==0))]
+ 10:	proc  2 (Car:1) vehicle_check.pml:211 (state 14)	[pos[id] = 1]
+		pos[0] = 1
+		pos[1] = 0
+ 12:	proc  2 (Car:1) vehicle_check.pml:213 (state 15)	[((pos[id]==1))]
+ 14:	proc  2 (Car:1) vehicle_check.pml:214 (state 16)	[just_crossed[id] = 0]
+ 16:	proc  2 (Car:1) vehicle_check.pml:221 (state 23)	[else]
+ 18:	proc  2 (Car:1) vehicle_check.pml:221 (state 24)	[(1)]
+ 20:	proc  2 (Car:1) vehicle_check.pml:226 (state 27)	[(((vis[id]&1)==0))]
+ 22:	proc  2 (Car:1) vehicle_check.pml:227 (state 28)	[target = 2]
+		Car(2):target = 2
+ 24:	proc  2 (Car:1) vehicle_check.pml:237 (state 37)	[((at_i[id]==9))]
+ 26:	proc  2 (Car:1) vehicle_check.pml:241 (state 40)	[else]
+ 28:	proc  2 (Car:1) vehicle_check.pml:242 (state 41)	[at_i[id] = 0]
+		at_i[0] = 0
+		at_i[1] = 0
+ 30:	proc  2 (Car:1) vehicle_check.pml:243 (state 42)	[dir[id] = 2]
+ 32:	proc  2 (Car:1) vehicle_check.pml:244 (state 43)	[pos[id] = 0]
+		pos[0] = 0
+		pos[1] = 0
+ 34:	proc  2 (Car:1) vehicle_check.pml:210 (state 13)	[((pos[id]==0))]
+ 36:	proc  2 (Car:1) vehicle_check.pml:211 (state 14)	[pos[id] = 1]
+		pos[0] = 1
+		pos[1] = 0
+Never claim moves to line 37	[((!(!((pos[0]==1)))&&!(((pos[0]==0)||done[0]))))]
+ 38:	proc  2 (Car:1) vehicle_check.pml:213 (state 15)	[((pos[id]==1))]
+Never claim moves to line 42	[(!(((pos[0]==0)||done[0])))]
+ 40:	proc  2 (Car:1) vehicle_check.pml:214 (state 16)	[just_crossed[id] = 0]
+ 42:	proc  2 (Car:1) vehicle_check.pml:221 (state 23)	[else]
+ 44:	proc  2 (Car:1) vehicle_check.pml:221 (state 24)	[(1)]
+ 46:	proc  2 (Car:1) vehicle_check.pml:226 (state 27)	[(((vis[id]&1)==0))]
+ 48:	proc  2 (Car:1) vehicle_check.pml:227 (state 28)	[target = 2]
+		Car(2):target = 2
+ 50:	proc  2 (Car:1) vehicle_check.pml:247 (state 46)	[((at_i[id]!=9))]
+ 52:	proc  2 (Car:1) vehicle_check.pml:249 (state 47)	[((sig[at_i[id]]!=dir[id]))]
+ 54:	proc  2 (Car:1) vehicle_check.pml:250 (state 48)	[(1)]
+ 56:	proc  1 (Signals:1) vehicle_check.pml:148 (state 1)	[i = 0]
+		Signals(1):i = 0
+ 57:	proc  1 (Signals:1) vehicle_check.pml:150 (state 2)	[((i<9))]
+ 57:	proc  1 (Signals:1) vehicle_check.pml:150 (state 3)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+ 57:	proc  1 (Signals:1) vehicle_check.pml:150 (state 4)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 1
+ 58:	proc  1 (Signals:1) vehicle_check.pml:150 (state 2)	[((i<9))]
+ 58:	proc  1 (Signals:1) vehicle_check.pml:150 (state 3)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+ 58:	proc  1 (Signals:1) vehicle_check.pml:150 (state 4)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 2
+ 59:	proc  1 (Signals:1) vehicle_check.pml:150 (state 2)	[((i<9))]
+ 59:	proc  1 (Signals:1) vehicle_check.pml:150 (state 3)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+ 59:	proc  1 (Signals:1) vehicle_check.pml:150 (state 4)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 3
+ 60:	proc  1 (Signals:1) vehicle_check.pml:150 (state 2)	[((i<9))]
+ 60:	proc  1 (Signals:1) vehicle_check.pml:150 (state 3)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+ 60:	proc  1 (Signals:1) vehicle_check.pml:150 (state 4)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 4
+ 61:	proc  1 (Signals:1) vehicle_check.pml:150 (state 2)	[((i<9))]
+ 61:	proc  1 (Signals:1) vehicle_check.pml:150 (state 3)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+ 61:	proc  1 (Signals:1) vehicle_check.pml:150 (state 4)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 5
+ 62:	proc  1 (Signals:1) vehicle_check.pml:150 (state 2)	[((i<9))]
+ 62:	proc  1 (Signals:1) vehicle_check.pml:150 (state 3)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+ 62:	proc  1 (Signals:1) vehicle_check.pml:150 (state 4)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 6
+ 63:	proc  1 (Signals:1) vehicle_check.pml:150 (state 2)	[((i<9))]
+ 63:	proc  1 (Signals:1) vehicle_check.pml:150 (state 3)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 0
+		sig[8] = 0
+ 63:	proc  1 (Signals:1) vehicle_check.pml:150 (state 4)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 7
+ 64:	proc  1 (Signals:1) vehicle_check.pml:150 (state 2)	[((i<9))]
+ 64:	proc  1 (Signals:1) vehicle_check.pml:150 (state 3)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 0
+ 64:	proc  1 (Signals:1) vehicle_check.pml:150 (state 4)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 0
+		Signals(1):i = 8
+ 65:	proc  1 (Signals:1) vehicle_check.pml:150 (state 2)	[((i<9))]
+ 65:	proc  1 (Signals:1) vehicle_check.pml:150 (state 3)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+ 65:	proc  1 (Signals:1) vehicle_check.pml:150 (state 4)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 9
+ 66:	proc  1 (Signals:1) vehicle_check.pml:151 (state 5)	[((i>=9))]
+ 67:	proc  1 (Signals:1) vehicle_check.pml:149 (state 9)	[break]
+ 69:	proc  1 (Signals:1) vehicle_check.pml:157 (state 11)	[(1)]
+ 71:	proc  2 (Car:1) vehicle_check.pml:213 (state 15)	[((pos[id]==1))]
+ 73:	proc  2 (Car:1) vehicle_check.pml:214 (state 16)	[just_crossed[id] = 0]
+ 75:	proc  2 (Car:1) vehicle_check.pml:221 (state 23)	[else]
+ 77:	proc  2 (Car:1) vehicle_check.pml:221 (state 24)	[(1)]
+ 79:	proc  2 (Car:1) vehicle_check.pml:226 (state 27)	[(((vis[id]&1)==0))]
+ 81:	proc  2 (Car:1) vehicle_check.pml:227 (state 28)	[target = 2]
+		Car(2):target = 2
+ 83:	proc  2 (Car:1) vehicle_check.pml:247 (state 46)	[((at_i[id]!=9))]
+ 85:	proc  1 (Signals:1) vehicle_check.pml:159 (state 12)	[i = 0]
+		Signals(1):i = 0
+ 86:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+ 87:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+ 87:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+ 87:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 1
+ 88:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+ 89:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+ 89:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+ 89:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 2
+ 90:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+ 91:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+ 91:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+ 91:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 3
+ 92:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+ 93:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+ 93:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+ 93:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 4
+ 94:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+ 95:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+ 95:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+ 95:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 5
+ 96:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+ 97:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+ 97:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+ 97:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 6
+ 98:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+ 99:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+ 99:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 2
+		sig[8] = 2
+ 99:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 7
+100:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+101:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+101:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 2
+101:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 2
+		Signals(1):i = 8
+102:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+103:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+103:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+103:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 9
+104:	proc  1 (Signals:1) vehicle_check.pml:169 (state 25)	[((i>=9))]
+105:	proc  1 (Signals:1) vehicle_check.pml:160 (state 29)	[break]
+107:	proc  1 (Signals:1) vehicle_check.pml:157 (state 11)	[(1)]
+109:	proc  2 (Car:1) vehicle_check.pml:249 (state 47)	[((sig[at_i[id]]!=dir[id]))]
+111:	proc  2 (Car:1) vehicle_check.pml:250 (state 48)	[(1)]
+113:	proc  2 (Car:1) vehicle_check.pml:213 (state 15)	[((pos[id]==1))]
+115:	proc  2 (Car:1) vehicle_check.pml:214 (state 16)	[just_crossed[id] = 0]
+117:	proc  2 (Car:1) vehicle_check.pml:221 (state 23)	[else]
+119:	proc  2 (Car:1) vehicle_check.pml:221 (state 24)	[(1)]
+121:	proc  2 (Car:1) vehicle_check.pml:226 (state 27)	[(((vis[id]&1)==0))]
+123:	proc  2 (Car:1) vehicle_check.pml:227 (state 28)	[target = 2]
+		Car(2):target = 2
+125:	proc  1 (Signals:1) vehicle_check.pml:159 (state 12)	[i = 0]
+		Signals(1):i = 0
+126:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+127:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+127:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+127:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 1
+128:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+129:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+129:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+129:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 2
+130:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+131:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+131:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+131:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 3
+132:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+133:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+133:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+133:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 4
+134:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+135:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+135:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+135:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 5
+136:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+137:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+137:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+137:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 6
+138:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+139:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+139:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 3
+		sig[8] = 3
+139:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 7
+140:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+141:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+141:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 3
+141:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 3
+		Signals(1):i = 8
+142:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+143:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+143:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+143:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 9
+144:	proc  1 (Signals:1) vehicle_check.pml:169 (state 25)	[((i>=9))]
+145:	proc  1 (Signals:1) vehicle_check.pml:160 (state 29)	[break]
+147:	proc  1 (Signals:1) vehicle_check.pml:157 (state 11)	[(1)]
+149:	proc  2 (Car:1) vehicle_check.pml:247 (state 46)	[((at_i[id]!=9))]
+151:	proc  2 (Car:1) vehicle_check.pml:249 (state 47)	[((sig[at_i[id]]!=dir[id]))]
+153:	proc  2 (Car:1) vehicle_check.pml:250 (state 48)	[(1)]
+155:	proc  2 (Car:1) vehicle_check.pml:213 (state 15)	[((pos[id]==1))]
+157:	proc  2 (Car:1) vehicle_check.pml:214 (state 16)	[just_crossed[id] = 0]
+159:	proc  2 (Car:1) vehicle_check.pml:221 (state 23)	[else]
+161:	proc  2 (Car:1) vehicle_check.pml:221 (state 24)	[(1)]
+163:	proc  2 (Car:1) vehicle_check.pml:226 (state 27)	[(((vis[id]&1)==0))]
+165:	proc  1 (Signals:1) vehicle_check.pml:159 (state 12)	[i = 0]
+		Signals(1):i = 0
+166:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+167:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+167:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+167:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 1
+168:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+169:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+169:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+169:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 2
+170:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+171:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+171:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+171:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 3
+172:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+173:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+173:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+173:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 4
+174:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+175:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+175:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+175:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 5
+176:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+177:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+177:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+177:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 6
+178:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+179:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+179:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 0
+		sig[8] = 0
+179:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 7
+180:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+181:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+181:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 0
+181:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 0
+		Signals(1):i = 8
+182:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+183:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+183:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+183:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+		Signals(1):i = 9
+184:	proc  1 (Signals:1) vehicle_check.pml:169 (state 25)	[((i>=9))]
+185:	proc  1 (Signals:1) vehicle_check.pml:160 (state 29)	[break]
+187:	proc  2 (Car:1) vehicle_check.pml:227 (state 28)	[target = 2]
+		Car(2):target = 2
+189:	proc  1 (Signals:1) vehicle_check.pml:157 (state 11)	[(1)]
+191:	proc  2 (Car:1) vehicle_check.pml:247 (state 46)	[((at_i[id]!=9))]
+193:	proc  2 (Car:1) vehicle_check.pml:249 (state 47)	[((sig[at_i[id]]!=dir[id]))]
+195:	proc  2 (Car:1) vehicle_check.pml:250 (state 48)	[(1)]
+197:	proc  2 (Car:1) vehicle_check.pml:213 (state 15)	[((pos[id]==1))]
+199:	proc  2 (Car:1) vehicle_check.pml:214 (state 16)	[just_crossed[id] = 0]
+201:	proc  2 (Car:1) vehicle_check.pml:221 (state 23)	[else]
+203:	proc  2 (Car:1) vehicle_check.pml:221 (state 24)	[(1)]
+205:	proc  2 (Car:1) vehicle_check.pml:226 (state 27)	[(((vis[id]&1)==0))]
+207:	proc  1 (Signals:1) vehicle_check.pml:159 (state 12)	[i = 0]
+		Signals(1):i = 0
+208:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+209:	proc  1 (Signals:1) vehicle_check.pml:164 (state 16)	[((sig[i]==1))]
+209:	proc  1 (Signals:1) vehicle_check.pml:164 (state 17)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+209:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+		Signals(1):i = 1
+210:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+211:	proc  1 (Signals:1) vehicle_check.pml:164 (state 16)	[((sig[i]==1))]
+211:	proc  1 (Signals:1) vehicle_check.pml:164 (state 17)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+211:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+		Signals(1):i = 2
+212:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+213:	proc  1 (Signals:1) vehicle_check.pml:164 (state 16)	[((sig[i]==1))]
+213:	proc  1 (Signals:1) vehicle_check.pml:164 (state 17)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+213:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+		Signals(1):i = 3
+214:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+215:	proc  1 (Signals:1) vehicle_check.pml:164 (state 16)	[((sig[i]==1))]
+215:	proc  1 (Signals:1) vehicle_check.pml:164 (state 17)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+215:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+		Signals(1):i = 4
+216:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+217:	proc  1 (Signals:1) vehicle_check.pml:164 (state 16)	[((sig[i]==1))]
+217:	proc  1 (Signals:1) vehicle_check.pml:164 (state 17)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+217:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+		Signals(1):i = 5
+218:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+219:	proc  1 (Signals:1) vehicle_check.pml:164 (state 16)	[((sig[i]==1))]
+219:	proc  1 (Signals:1) vehicle_check.pml:164 (state 17)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+219:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+		Signals(1):i = 6
+220:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+221:	proc  1 (Signals:1) vehicle_check.pml:164 (state 16)	[((sig[i]==1))]
+221:	proc  1 (Signals:1) vehicle_check.pml:164 (state 17)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 1
+		sig[8] = 1
+221:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 1
+		sig[8] = 1
+		Signals(1):i = 7
+222:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+223:	proc  1 (Signals:1) vehicle_check.pml:164 (state 16)	[((sig[i]==1))]
+223:	proc  1 (Signals:1) vehicle_check.pml:164 (state 17)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 1
+223:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 1
+		Signals(1):i = 8
+224:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+225:	proc  1 (Signals:1) vehicle_check.pml:164 (state 16)	[((sig[i]==1))]
+225:	proc  1 (Signals:1) vehicle_check.pml:164 (state 17)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+225:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 9
+226:	proc  1 (Signals:1) vehicle_check.pml:169 (state 25)	[((i>=9))]
+227:	proc  1 (Signals:1) vehicle_check.pml:160 (state 29)	[break]
+229:	proc  2 (Car:1) vehicle_check.pml:227 (state 28)	[target = 2]
+		Car(2):target = 2
+231:	proc  2 (Car:1) vehicle_check.pml:247 (state 46)	[((at_i[id]!=9))]
+233:	proc  1 (Signals:1) vehicle_check.pml:157 (state 11)	[(1)]
+235:	proc  1 (Signals:1) vehicle_check.pml:159 (state 12)	[i = 0]
+		Signals(1):i = 0
+236:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+237:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+237:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+237:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 1
+238:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+239:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+239:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+239:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 2
+240:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+241:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+241:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+241:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 3
+242:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+243:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+243:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+243:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 4
+244:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+245:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+245:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+245:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 5
+246:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+247:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+247:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+247:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 6
+248:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+249:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+249:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 2
+		sig[8] = 2
+249:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 7
+250:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+251:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+251:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 2
+251:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 2
+		Signals(1):i = 8
+252:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+253:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+253:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+253:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 9
+254:	proc  1 (Signals:1) vehicle_check.pml:169 (state 25)	[((i>=9))]
+255:	proc  1 (Signals:1) vehicle_check.pml:160 (state 29)	[break]
+257:	proc  1 (Signals:1) vehicle_check.pml:157 (state 11)	[(1)]
+259:	proc  2 (Car:1) vehicle_check.pml:249 (state 47)	[((sig[at_i[id]]!=dir[id]))]
+261:	proc  2 (Car:1) vehicle_check.pml:250 (state 48)	[(1)]
+263:	proc  2 (Car:1) vehicle_check.pml:213 (state 15)	[((pos[id]==1))]
+265:	proc  2 (Car:1) vehicle_check.pml:214 (state 16)	[just_crossed[id] = 0]
+267:	proc  2 (Car:1) vehicle_check.pml:221 (state 23)	[else]
+269:	proc  2 (Car:1) vehicle_check.pml:221 (state 24)	[(1)]
+271:	proc  2 (Car:1) vehicle_check.pml:226 (state 27)	[(((vis[id]&1)==0))]
+273:	proc  2 (Car:1) vehicle_check.pml:227 (state 28)	[target = 2]
+		Car(2):target = 2
+275:	proc  2 (Car:1) vehicle_check.pml:247 (state 46)	[((at_i[id]!=9))]
+277:	proc  1 (Signals:1) vehicle_check.pml:159 (state 12)	[i = 0]
+		Signals(1):i = 0
+278:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+279:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+279:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+279:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 1
+280:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+281:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+281:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+281:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 2
+282:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+283:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+283:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+283:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 3
+284:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+285:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+285:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+285:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 4
+286:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+287:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+287:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+287:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 5
+288:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+289:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+289:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+289:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 6
+290:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+291:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+291:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 3
+		sig[8] = 3
+291:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 7
+292:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+293:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+293:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 3
+293:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 3
+		Signals(1):i = 8
+294:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+295:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+295:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+295:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 9
+296:	proc  1 (Signals:1) vehicle_check.pml:169 (state 25)	[((i>=9))]
+297:	proc  1 (Signals:1) vehicle_check.pml:160 (state 29)	[break]
+299:	proc  2 (Car:1) vehicle_check.pml:249 (state 47)	[((sig[at_i[id]]!=dir[id]))]
+301:	proc  2 (Car:1) vehicle_check.pml:250 (state 48)	[(1)]
+303:	proc  2 (Car:1) vehicle_check.pml:213 (state 15)	[((pos[id]==1))]
+305:	proc  2 (Car:1) vehicle_check.pml:214 (state 16)	[just_crossed[id] = 0]
+307:	proc  2 (Car:1) vehicle_check.pml:221 (state 23)	[else]
+309:	proc  2 (Car:1) vehicle_check.pml:221 (state 24)	[(1)]
+311:	proc  2 (Car:1) vehicle_check.pml:226 (state 27)	[(((vis[id]&1)==0))]
+313:	proc  2 (Car:1) vehicle_check.pml:227 (state 28)	[target = 2]
+		Car(2):target = 2
+315:	proc  1 (Signals:1) vehicle_check.pml:157 (state 11)	[(1)]
+317:	proc  2 (Car:1) vehicle_check.pml:247 (state 46)	[((at_i[id]!=9))]
+319:	proc  2 (Car:1) vehicle_check.pml:249 (state 47)	[((sig[at_i[id]]!=dir[id]))]
+321:	proc  2 (Car:1) vehicle_check.pml:250 (state 48)	[(1)]
+323:	proc  2 (Car:1) vehicle_check.pml:213 (state 15)	[((pos[id]==1))]
+325:	proc  2 (Car:1) vehicle_check.pml:214 (state 16)	[just_crossed[id] = 0]
+327:	proc  2 (Car:1) vehicle_check.pml:221 (state 23)	[else]
+329:	proc  2 (Car:1) vehicle_check.pml:221 (state 24)	[(1)]
+331:	proc  1 (Signals:1) vehicle_check.pml:159 (state 12)	[i = 0]
+		Signals(1):i = 0
+332:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+333:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+333:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+333:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 1
+334:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+335:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+335:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+335:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 2
+336:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+337:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+337:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+337:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 3
+338:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+339:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+339:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+339:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 4
+340:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+341:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+341:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+341:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 5
+342:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+343:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+343:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+343:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 6
+344:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+345:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+345:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 0
+		sig[8] = 0
+345:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 7
+346:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+347:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+347:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 0
+347:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 0
+		Signals(1):i = 8
+348:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+349:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+349:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+349:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+		Signals(1):i = 9
+350:	proc  1 (Signals:1) vehicle_check.pml:169 (state 25)	[((i>=9))]
+351:	proc  1 (Signals:1) vehicle_check.pml:160 (state 29)	[break]
+353:	proc  2 (Car:1) vehicle_check.pml:226 (state 27)	[(((vis[id]&1)==0))]
+  <<<<<START OF CYCLE>>>>>
+355:	proc  2 (Car:1) vehicle_check.pml:227 (state 28)	[target = 2]
+		Car(2):target = 2
+357:	proc  2 (Car:1) vehicle_check.pml:247 (state 46)	[((at_i[id]!=9))]
+359:	proc  2 (Car:1) vehicle_check.pml:249 (state 47)	[((sig[at_i[id]]!=dir[id]))]
+361:	proc  2 (Car:1) vehicle_check.pml:250 (state 48)	[(1)]
+363:	proc  2 (Car:1) vehicle_check.pml:213 (state 15)	[((pos[id]==1))]
+365:	proc  2 (Car:1) vehicle_check.pml:214 (state 16)	[just_crossed[id] = 0]
+367:	proc  2 (Car:1) vehicle_check.pml:221 (state 23)	[else]
+369:	proc  2 (Car:1) vehicle_check.pml:221 (state 24)	[(1)]
+371:	proc  2 (Car:1) vehicle_check.pml:226 (state 27)	[(((vis[id]&1)==0))]
+373:	proc  1 (Signals:1) vehicle_check.pml:157 (state 11)	[(1)]
+375:	proc  2 (Car:1) vehicle_check.pml:227 (state 28)	[target = 2]
+		Car(2):target = 2
+377:	proc  2 (Car:1) vehicle_check.pml:247 (state 46)	[((at_i[id]!=9))]
+379:	proc  2 (Car:1) vehicle_check.pml:249 (state 47)	[((sig[at_i[id]]!=dir[id]))]
+381:	proc  2 (Car:1) vehicle_check.pml:250 (state 48)	[(1)]
+383:	proc  2 (Car:1) vehicle_check.pml:213 (state 15)	[((pos[id]==1))]
+385:	proc  2 (Car:1) vehicle_check.pml:214 (state 16)	[just_crossed[id] = 0]
+387:	proc  2 (Car:1) vehicle_check.pml:221 (state 23)	[else]
+389:	proc  2 (Car:1) vehicle_check.pml:221 (state 24)	[(1)]
+391:	proc  1 (Signals:1) vehicle_check.pml:159 (state 12)	[i = 0]
+		Signals(1):i = 0
+392:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+393:	proc  1 (Signals:1) vehicle_check.pml:164 (state 16)	[((sig[i]==1))]
+393:	proc  1 (Signals:1) vehicle_check.pml:164 (state 17)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+393:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+		Signals(1):i = 1
+394:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+395:	proc  1 (Signals:1) vehicle_check.pml:164 (state 16)	[((sig[i]==1))]
+395:	proc  1 (Signals:1) vehicle_check.pml:164 (state 17)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+395:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+		Signals(1):i = 2
+396:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+397:	proc  1 (Signals:1) vehicle_check.pml:164 (state 16)	[((sig[i]==1))]
+397:	proc  1 (Signals:1) vehicle_check.pml:164 (state 17)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+397:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+		Signals(1):i = 3
+398:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+399:	proc  1 (Signals:1) vehicle_check.pml:164 (state 16)	[((sig[i]==1))]
+399:	proc  1 (Signals:1) vehicle_check.pml:164 (state 17)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+399:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+		Signals(1):i = 4
+400:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+401:	proc  1 (Signals:1) vehicle_check.pml:164 (state 16)	[((sig[i]==1))]
+401:	proc  1 (Signals:1) vehicle_check.pml:164 (state 17)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+401:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+		Signals(1):i = 5
+402:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+403:	proc  1 (Signals:1) vehicle_check.pml:164 (state 16)	[((sig[i]==1))]
+403:	proc  1 (Signals:1) vehicle_check.pml:164 (state 17)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+403:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+		Signals(1):i = 6
+404:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+405:	proc  1 (Signals:1) vehicle_check.pml:164 (state 16)	[((sig[i]==1))]
+405:	proc  1 (Signals:1) vehicle_check.pml:164 (state 17)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 1
+		sig[8] = 1
+405:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 1
+		sig[8] = 1
+		Signals(1):i = 7
+406:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+407:	proc  1 (Signals:1) vehicle_check.pml:164 (state 16)	[((sig[i]==1))]
+407:	proc  1 (Signals:1) vehicle_check.pml:164 (state 17)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 1
+407:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 1
+		Signals(1):i = 8
+408:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+409:	proc  1 (Signals:1) vehicle_check.pml:164 (state 16)	[((sig[i]==1))]
+409:	proc  1 (Signals:1) vehicle_check.pml:164 (state 17)	[sig[i] = 2]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+409:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 2
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 9
+410:	proc  1 (Signals:1) vehicle_check.pml:169 (state 25)	[((i>=9))]
+411:	proc  1 (Signals:1) vehicle_check.pml:160 (state 29)	[break]
+413:	proc  1 (Signals:1) vehicle_check.pml:157 (state 11)	[(1)]
+415:	proc  2 (Car:1) vehicle_check.pml:226 (state 27)	[(((vis[id]&1)==0))]
+417:	proc  2 (Car:1) vehicle_check.pml:227 (state 28)	[target = 2]
+		Car(2):target = 2
+419:	proc  2 (Car:1) vehicle_check.pml:247 (state 46)	[((at_i[id]!=9))]
+421:	proc  1 (Signals:1) vehicle_check.pml:159 (state 12)	[i = 0]
+		Signals(1):i = 0
+422:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+423:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+423:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+423:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 2
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 1
+424:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+425:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+425:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+425:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 2
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 2
+426:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+427:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+427:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+427:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 2
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 3
+428:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+429:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+429:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+429:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 2
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 4
+430:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+431:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+431:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+431:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 2
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 5
+432:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+433:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+433:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+433:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 2
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 6
+434:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+435:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+435:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 2
+		sig[8] = 2
+435:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 2
+		sig[8] = 2
+		Signals(1):i = 7
+436:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+437:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+437:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 2
+437:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 2
+		Signals(1):i = 8
+438:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+439:	proc  1 (Signals:1) vehicle_check.pml:165 (state 18)	[((sig[i]==2))]
+439:	proc  1 (Signals:1) vehicle_check.pml:165 (state 19)	[sig[i] = 3]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+439:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 3
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 9
+440:	proc  1 (Signals:1) vehicle_check.pml:169 (state 25)	[((i>=9))]
+441:	proc  1 (Signals:1) vehicle_check.pml:160 (state 29)	[break]
+443:	proc  1 (Signals:1) vehicle_check.pml:157 (state 11)	[(1)]
+445:	proc  2 (Car:1) vehicle_check.pml:249 (state 47)	[((sig[at_i[id]]!=dir[id]))]
+447:	proc  2 (Car:1) vehicle_check.pml:250 (state 48)	[(1)]
+449:	proc  2 (Car:1) vehicle_check.pml:213 (state 15)	[((pos[id]==1))]
+451:	proc  2 (Car:1) vehicle_check.pml:214 (state 16)	[just_crossed[id] = 0]
+453:	proc  2 (Car:1) vehicle_check.pml:221 (state 23)	[else]
+455:	proc  2 (Car:1) vehicle_check.pml:221 (state 24)	[(1)]
+457:	proc  2 (Car:1) vehicle_check.pml:226 (state 27)	[(((vis[id]&1)==0))]
+459:	proc  2 (Car:1) vehicle_check.pml:227 (state 28)	[target = 2]
+		Car(2):target = 2
+461:	proc  1 (Signals:1) vehicle_check.pml:159 (state 12)	[i = 0]
+		Signals(1):i = 0
+462:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+463:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+463:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+463:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 3
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 1
+464:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+465:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+465:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+465:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 3
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 2
+466:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+467:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+467:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+467:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 3
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 3
+468:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+469:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+469:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+469:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 3
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 4
+470:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+471:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+471:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+471:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 3
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 5
+472:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+473:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+473:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+473:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 3
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 6
+474:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+475:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+475:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 3
+		sig[8] = 3
+475:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 3
+		sig[8] = 3
+		Signals(1):i = 7
+476:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+477:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+477:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 3
+477:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 3
+		Signals(1):i = 8
+478:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+479:	proc  1 (Signals:1) vehicle_check.pml:166 (state 20)	[((sig[i]==3))]
+479:	proc  1 (Signals:1) vehicle_check.pml:166 (state 21)	[sig[i] = 0]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+479:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 0
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 9
+480:	proc  1 (Signals:1) vehicle_check.pml:169 (state 25)	[((i>=9))]
+481:	proc  1 (Signals:1) vehicle_check.pml:160 (state 29)	[break]
+483:	proc  1 (Signals:1) vehicle_check.pml:157 (state 11)	[(1)]
+485:	proc  2 (Car:1) vehicle_check.pml:247 (state 46)	[((at_i[id]!=9))]
+487:	proc  2 (Car:1) vehicle_check.pml:249 (state 47)	[((sig[at_i[id]]!=dir[id]))]
+489:	proc  2 (Car:1) vehicle_check.pml:250 (state 48)	[(1)]
+491:	proc  2 (Car:1) vehicle_check.pml:213 (state 15)	[((pos[id]==1))]
+493:	proc  2 (Car:1) vehicle_check.pml:214 (state 16)	[just_crossed[id] = 0]
+495:	proc  2 (Car:1) vehicle_check.pml:221 (state 23)	[else]
+497:	proc  2 (Car:1) vehicle_check.pml:221 (state 24)	[(1)]
+499:	proc  2 (Car:1) vehicle_check.pml:226 (state 27)	[(((vis[id]&1)==0))]
+501:	proc  1 (Signals:1) vehicle_check.pml:159 (state 12)	[i = 0]
+		Signals(1):i = 0
+502:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+503:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+503:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+503:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 0
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 1
+504:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+505:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+505:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+505:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 0
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 2
+506:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+507:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+507:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+507:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 0
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 3
+508:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+509:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+509:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+509:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 0
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 4
+510:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+511:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+511:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+511:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 0
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 5
+512:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+513:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+513:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+513:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 0
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 6
+514:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+515:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+515:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 0
+		sig[8] = 0
+515:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 0
+		sig[8] = 0
+		Signals(1):i = 7
+516:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+517:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+517:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 0
+517:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 0
+		Signals(1):i = 8
+518:	proc  1 (Signals:1) vehicle_check.pml:161 (state 13)	[((i<9))]
+519:	proc  1 (Signals:1) vehicle_check.pml:163 (state 14)	[((sig[i]==0))]
+519:	proc  1 (Signals:1) vehicle_check.pml:163 (state 15)	[sig[i] = 1]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+519:	proc  1 (Signals:1) vehicle_check.pml:168 (state 24)	[i = (i+1)]
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+		Signals(1):i = 9
+520:	proc  1 (Signals:1) vehicle_check.pml:169 (state 25)	[((i>=9))]
+521:	proc  1 (Signals:1) vehicle_check.pml:160 (state 29)	[break]
+523:	proc  2 (Car:1) vehicle_check.pml:227 (state 28)	[target = 2]
+		Car(2):target = 2
+525:	proc  2 (Car:1) vehicle_check.pml:247 (state 46)	[((at_i[id]!=9))]
+527:	proc  2 (Car:1) vehicle_check.pml:249 (state 47)	[((sig[at_i[id]]!=dir[id]))]
+529:	proc  2 (Car:1) vehicle_check.pml:250 (state 48)	[(1)]
+531:	proc  2 (Car:1) vehicle_check.pml:213 (state 15)	[((pos[id]==1))]
+533:	proc  2 (Car:1) vehicle_check.pml:214 (state 16)	[just_crossed[id] = 0]
+535:	proc  2 (Car:1) vehicle_check.pml:221 (state 23)	[else]
+537:	proc  2 (Car:1) vehicle_check.pml:221 (state 24)	[(1)]
+539:	proc  2 (Car:1) vehicle_check.pml:226 (state 27)	[(((vis[id]&1)==0))]
+spin: trail ends after 539 steps
+#processes: 3
+		sig[0] = 1
+		sig[1] = 1
+		sig[2] = 1
+		sig[3] = 1
+		sig[4] = 1
+		sig[5] = 1
+		sig[6] = 1
+		sig[7] = 1
+		sig[8] = 1
+		pos[0] = 1
+		pos[1] = 0
+		at_i[0] = 0
+		at_i[1] = 0
+		dir[0] = 2
+		dir[1] = 0
+		pdir[0] = 2
+		pdir[1] = 0
+		vis[0] = 0
+		vis[1] = 0
+		done[0] = 0
+		done[1] = 0
+		started[0] = 1
+		started[1] = 0
+		uturn_flag = 0
+		just_crossed[0] = 0
+		just_crossed[1] = 0
+		cross_was_green[0] = 1
+		cross_was_green[1] = 0
+539:	proc  2 (Car:1) vehicle_check.pml:227 (state 28)
+		Car(2):target = 2
+		Car(2):ni = 0
+		Car(2):nd = 0
+		Car(2):s_dir = 2
+		Car(2):s_at = 9
+		Car(2):id = 0
+539:	proc  1 (Signals:1) vehicle_check.pml:156 (state 31)
+		Signals(1):i = 9
+539:	proc  0 (:init::1) vehicle_check.pml:446 (state 7) <valid end state>
+539:	proc  - (p5_no_starvation:1) _spin_nvr.tmp:41 (state 10)
+3 processes created

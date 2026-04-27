@@ -1,0 +1,6 @@
+ltl p1_no_uturn: [] (! (uturn_flag))
+ltl p2_no_redlight: [] ((! (just_crossed[0])) || (cross_was_green[0]))
+ltl p3_visits_all: <> (((vis[0]==7)) || ((vis[1]==7)))
+ltl p4_no_collision: [] (! (((((((started[0]) && (started[1])) && (! (done[0]))) && (! (done[1]))) && ((at_i[0]==at_i[1]))) && ((pos[0]==pos[1]))) && ((dir[0]==dir[1]))))
+ltl p5_no_starvation: [] ((! ((pos[0]==1))) || (<> (((pos[0]==0)) || (done[0]))))
+spin: cannot find trail file
