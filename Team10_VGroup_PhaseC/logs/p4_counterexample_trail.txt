@@ -1,0 +1,19 @@
+=== P4 counterexample trail replay ===
+ltl p4_topology_valid: [] (((phase==1)) || ((phase==2)))
+spin: _spin_nvr.tmp:3, Error: assertion violated
+spin: text of failed assertion: assert(!(!(((phase==1)||(phase==2)))))
+Never claim moves to line 3	[assert(!(!(((phase==1)||(phase==2)))))]
+spin: trail ends after 1 steps
+#processes: 2
+		phase = 0
+		timer = 0
+		cycle_index = 0
+		green_N = 1
+		green_S = 0
+		green_E = 0
+		green_W = 0
+  1:	proc  1 (:init::1) signal_check_corner.pml:128 (state 1)
+  1:	proc  0 (Controller:1) signal_check_corner.pml:88 (state 52)
+  1:	proc  - (p4_topology_valid:1) _spin_nvr.tmp:2 (state 6)
+2 processes created
+

@@ -1,0 +1,40 @@
+============================================================
+  p2_inf_often_N  (signal_check.pml, -DSEL_p2_N)  -- LIVENESS, weak fairness
+============================================================
+ltl p2_inf_often_N: [] (<> ((phase==0)))
+
+(Spin Version 6.5.2 -- 6 December 2019)
+	+ Partial Order Reduction
+
+Full statespace search for:
+	never claim         	+ (p2_inf_often_N)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 36 byte, depth reached 3633, errors: 0
+      331 states, stored (454 visited)
+      245 states, matched
+      699 transitions (= visited+matched)
+     8870 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    0.020	equivalent memory usage for states (stored*(State-vector + overhead))
+    0.287	actual memory usage for states
+  128.000	memory used for hash table (-w24)
+    0.534	memory used for DFS stack (-m10000)
+  128.730	total actual memory usage
+
+
+unreached in proctype Controller
+	signal_check.pml:137, state 46, "-end-"
+	(1 of 46 states)
+unreached in init
+	(0 of 2 states)
+unreached in claim p2_inf_often_N
+	_spin_nvr.tmp:10, state 13, "-end-"
+	(1 of 13 states)
+
+pan: elapsed time 0 seconds
+
