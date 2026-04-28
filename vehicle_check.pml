@@ -18,11 +18,11 @@
  *   Signal controller     →  non-deterministic (worst-case schedule)
  *
  * GRID LAYOUT (shared/topology.py):
- *  A(9)- I00(0)--I01(1)--I02(2)=B
+ *  A(9)- I00(0)--I01(1)--I02(2)=D
  *           |        |        |
  *        I10(3)--I11(4)--I12(5)
  *          |        |        |
- *       I20(6)=D-I21(7)--I22(8)=C
+ *       I20(6)=B-I21(7)--I22(8)=C
  *
  * PROPERTIES VERIFIED:
  *   P1 (safety)   : No vehicle makes a U-turn
@@ -67,11 +67,11 @@
 /* Intersection IDs  (shared/topology.py _node_id) */
 #define I00 0
 #define I01 1
-#define I02 2   /* = waypoint B */
+#define I02 2   /* = waypoint D */
 #define I10 3
 #define I11 4
 #define I12 5
-#define I20 6   /* = waypoint D */
+#define I20 6   /* = waypoint B */
 #define I21 7
 #define I22 8   /* = waypoint C */
 #define A_NODE 9
@@ -83,12 +83,17 @@
 
 
 
+
 /* Waypoint bitmask  (shared/topology.py WAYPOINT_INTERSECTIONS) */
-#define HAS_B 1   /* bit 0 = visited I02 */
-#define HAS_D 2   /* bit 1 = visited I20 */
-#define HAS_C 4   /* bit 2 = visited I22 */
+#define HAS_D 1   /* bit 0 = visited I02 */
+#define HAS_C 2   /* bit 1 = visited I22 */
+#define HAS_B 4   /* bit 2 = visited I20 */
 #define ALL_W 7   /* all three visited    */
 
+bool busy[36];
+#define IDX(i,d) (i*4 + d)
+#define VALID_NODE(i) ((i) != A_NODE)
+#define SEG(i,d) busy[IDX(i,d)]
 
 /* ============================================================
  * GLOBAL STATE
@@ -109,6 +114,7 @@ byte pdir[2];      /* direction on PREVIOUS segment (U-turn det)*/
 byte vis[2];       /* visited waypoint bitmask (0..7)           */
 bool done[2];      /* true when full A→B→C→D→A tour complete   */
 bool started[2];   /* true after each car finishes initialization */
+byte turn;   /* 0 = car moves, 1 = signals move */
 
 /* Observation flags used in LTL formulas */
 bool uturn_flag;          /* set if any car makes a U-turn (P1)  */
@@ -139,22 +145,20 @@ bool cross_was_green[2];  /* was signal green when car crossed?  (P2) */
  *   hostile scheduler can delay a car forever.  Round-robin is
  *   fair by construction and matches i_group/scheduler.py.
  * ============================================================ */
-active proctype Signals()
+proctype Signals()
 {
     byte i;
 
-    /* initialise all intersections to East-green */
     atomic {
         i = 0;
         do
         :: (i < 9) -> sig[i] = E; i++
-        :: (i >= 9) -> break
+        :: else -> break
         od
     };
 
-    /* each step: rotate every intersection N->S->E->W->N */
     do
-    :: true ->
+    :: (turn == 2) ->
         atomic {
             i = 0;
             do
@@ -166,8 +170,10 @@ active proctype Signals()
                 :: (sig[i] == W) -> sig[i] = N
                 fi;
                 i++
-            :: (i >= 9) -> break
-            od
+            :: else -> break
+            od;
+
+            turn = 0
         }
     od
 }
@@ -189,10 +195,11 @@ active proctype Signals()
 proctype Car(byte id; byte s_at; byte s_dir)
 {
     byte nd;
-   byte ni;
-   byte target;
+    byte ni;
+    byte target;
+    byte old_i;
+    byte old_d;
 
-    /* --- initialise car state --- */
     atomic {
         at_i[id]  = s_at;
         dir[id]   = s_dir;
@@ -200,224 +207,217 @@ proctype Car(byte id; byte s_at; byte s_dir)
         pos[id]   = ON_SEG;
         vis[id]   = 0;
         done[id]  = false;
-        just_crossed[id]   = false;
-        cross_was_green[id]= true;
+        just_crossed[id]    = false;
+        cross_was_green[id] = true;
         started[id] = true;
+        if
+        :: VALID_NODE(s_at) ->
+            SEG(s_at, s_dir) = true
+        :: else -> skip
+        fi;
     };
 
     do
-    :: done[id] -> skip  /* tour complete — exit loop */
+    
 
-    /* ── ON_SEG: non-det advance or stay (car-ahead blocked)
-     * Abstracts slots 0..28 from strategy.py:123-126
-     * ── */
-  :: (pos[id] == ON_SEG) ->
-    pos[id] = APPROACH
-
-    /* ── APPROACH: handle A endpoint OR check signal at intersection
-     * Directly models strategy.py:132-135 (endpoint = just MOVE, no signal)
-     * and strategy.py:141 (intersection = check signal)
-     * ── */
-    :: (pos[id] == APPROACH) ->
-        just_crossed[id] = false;
-        :: (pos[id] == APPROACH) ->
-    just_crossed[id] = false;
-
-      if
-      :: (at_i[id] == I02) -> vis[id] = vis[id] | HAS_B;
-      :: else -> skip;
-      fi;
-
-      if
-      :: (at_i[id] == I20) -> vis[id] = vis[id] | HAS_D;
-      :: else -> skip;
-      fi;
-
-      if
-      :: (at_i[id] == I22) -> vis[id] = vis[id] | HAS_C;
-      :: else -> skip;
-      fi;
-
-      if
-      :: ((vis[id] & HAS_B) == 0) -> target = I02;
-      :: ((vis[id] & HAS_D) == 0) -> target = I20;
-      :: ((vis[id] & HAS_C) == 0) -> target = I22;
-      :: else -> target = A_NODE;
-      fi;
-      if
-         :: ((vis[id] & HAS_B) == 0) -> target = I02
-         :: ((vis[id] & HAS_D) == 0) -> target = I20
-         :: ((vis[id] & HAS_C) == 0) -> target = I22
-         :: else -> target = A_NODE
-      fi;
-
-        if
-        /* ── A_NODE: short 1/30-mile segment ends at A (not an intersection).
-         * No signal check needed — strategy.py:132 is_intersection() == False.
-         * Arriving at A means the full A→B→C→D→A tour is complete.
-         * ── */
-       :: (at_i[id] == A_NODE) ->
-         if
-      :: (vis[id] == ALL_W) ->
-        done[id] = true
-      :: else ->
-        at_i[id] = I00;
-        dir[id]  = E;
-        pos[id]  = ON_SEG
-      fi
-
-        /* ── Circle intersection: check signal ── */
-        :: (at_i[id] != A_NODE) ->
-        if
-        /* RED: must wait — strategy.py:141-142 */
-        :: (sig[at_i[id]] != dir[id]) -> skip
-
-        /* GREEN: cross the intersection
-         * Choose next (direction, intersection) non-deterministically.
-         * Every choice obeys:
-         *   (a) Edge must exist in the 3x3 grid  (topology.py)
-         *   (b) No U-turn                         (topology.py VALID_TURNS)
-         * This non-det set is a sound over-approximation of the
-         * BFS planner in v_group/planner.py — if P1..P5 hold for
-         * ALL routing choices, they hold for BFS routing too.
-         */
-        :: (sig[at_i[id]] == dir[id]) ->
-
-            /* record crossing observation BEFORE changing state */
-            cross_was_green[id] = true;
-            /* cross_was_green[id] = (sig[at_i[id]] == dir[id]); */
-            just_crossed[id]    = true;
-
-            /* ── Update visited waypoint BEFORE planning next target ──
-            * This matches the Python strategy idea:
-            * when the car reaches a destination intersection, it chooses
-            * the next destination before choosing the next segment.
-            */
-            if
-            :: (at_i[id] == I02) -> vis[id] = vis[id] | HAS_B
-            :: (at_i[id] == I20) -> vis[id] = vis[id] | HAS_D
-            :: (at_i[id] == I22) -> vis[id] = vis[id] | HAS_C
-            :: else -> skip
-            fi;
-
-            /* ── Choose target: abstract the BFS planner result ──
-            * Python chooses the closest unvisited waypoint; this model uses
-            * a fixed lightweight order B -> D -> C -> A to avoid BFS state explosion.
-            */
-            if
-            :: ((vis[id] & HAS_B) == 0) -> target = I02
-            :: ((vis[id] & HAS_D) == 0) -> target = I20
-            :: ((vis[id] & HAS_C) == 0) -> target = I22
-            :: else -> target = A_NODE
-            fi;
-
-            /* ── Target-directed routing.
-            * This replaces full non-deterministic routing with a compact
-            * BFS-effect abstraction: choose a next edge that moves toward target.
-            */
+    :: ((id == 0 && turn == 0) || (id == 1 && turn == 1)) ->
+        atomic {
 
             if
+            :: done[id] -> skip
 
-            /* ===== currently at I00 ===== */
-            :: (at_i[id] == I00) ->
+            :: (pos[id] == ON_SEG) ->
                if
-               :: (target == I02) -> nd = E; ni = I01
-               :: (target == I20) -> nd = S; ni = I10
-               :: (target == I22) -> nd = E; ni = I01
-               :: (target == A_NODE) -> nd = W; ni = A_NODE
-               fi
+               :: (started[1-id] &&
+                  !done[1-id] &&
+                  at_i[1-id] == at_i[id] &&
+                  pos[1-id]  == APPROACH &&
+                  dir[1-id]  == dir[id]) ->
+                  skip
+               :: else ->
+                    pos[id] = APPROACH;
+                    fi
 
-            /* ===== currently at I01 ===== */
-            :: (at_i[id] == I01) ->
-               if
-               :: (target == I02) -> nd = E; ni = I02
-               :: (target == I20) -> nd = S; ni = I11
-               :: (target == I22) -> nd = E; ni = I02
-               :: (target == A_NODE) -> nd = W; ni = I00
-               fi
+            :: (pos[id] == APPROACH) ->
+                just_crossed[id] = false;
+                /* mark waypoint when car reaches that intersection */
+                if
+                :: (at_i[id] == I02) -> vis[id] = vis[id] | HAS_D
+                :: (at_i[id] == I20) -> vis[id] = vis[id] | HAS_B
+                :: (at_i[id] == I22) -> vis[id] = vis[id] | HAS_C
+                :: else -> skip
+                fi;
 
-            /* ===== currently at I02 = B ===== */
-            :: (at_i[id] == I02) ->
-               if
-               :: (target == I20) -> nd = S; ni = I12
-               :: (target == I22) -> nd = S; ni = I12
-               :: (target == A_NODE) -> nd = W; ni = I01
-               fi
+                /* fixed visit order: B -> D -> C -> A */
+                /* choose next target in a fixed order: D -> C -> B -> A */
+                /* fixed visiting order: D -> C -> B -> A */
+                if
+                :: ((vis[id] & HAS_D) == 0) ->
+                    target = I02
 
-            /* ===== currently at I10 ===== */
-            :: (at_i[id] == I10) ->
-               if
-               :: (target == I02) -> nd = N; ni = I00
-               :: (target == I20) -> nd = S; ni = I20
-               :: (target == I22) -> nd = E; ni = I11
-               :: (target == A_NODE) -> nd = N; ni = I00
-               fi
+                :: ((vis[id] & HAS_D) != 0 && (vis[id] & HAS_C) == 0) ->
+                    target = I22
 
-            /* ===== currently at I11 ===== */
-            :: (at_i[id] == I11) ->
-               if
-               :: (target == I02) -> nd = N; ni = I01
-               :: (target == I20) -> nd = W; ni = I10
-               :: (target == I22) -> nd = E; ni = I12
-               :: (target == A_NODE) -> nd = N; ni = I01
-               fi
+                :: ((vis[id] & HAS_D) != 0 &&
+                    (vis[id] & HAS_C) != 0 &&
+                    (vis[id] & HAS_B) == 0) ->
+                    target = I20
 
-            /* ===== currently at I12 ===== */
-            :: (at_i[id] == I12) ->
-               if
-               :: (target == I02) -> nd = N; ni = I02
-               :: (target == I20) -> nd = W; ni = I11
-               :: (target == I22) -> nd = S; ni = I22
-               :: (target == A_NODE) -> nd = W; ni = I11
-               fi
+                :: else ->
+                    target = A_NODE
+                fi
 
-            /* ===== currently at I20 = D ===== */
-            :: (at_i[id] == I20) ->
-               if
-               :: (target == I22) -> nd = E; ni = I21
-               :: (target == A_NODE) -> nd = N; ni = I10
-               :: else -> nd = E; ni = I21
-               fi
+                if
+                :: (at_i[id] == A_NODE) ->
+                    if
+                    :: (vis[id] == ALL_W) ->
+                        done[id] = true
 
-            /* ===== currently at I21 ===== */
-            :: (at_i[id] == I21) ->
-               if
-               :: (target == I02) -> nd = N; ni = I11
-               :: (target == I20) -> nd = W; ni = I20
-               :: (target == I22) -> nd = E; ni = I22
-               :: (target == A_NODE) -> nd = N; ni = I11
-               fi
+                    :: else ->
+                        if
+                        :: (!SEG(I00, E)) ->
+                            SEG(I00, E) = true;
+                            at_i[id] = I00;
+                            dir[id]  = E;
+                            pos[id]  = ON_SEG
+                        :: else ->
+                            pos[id] = APPROACH
+                        fi
+                    fi
 
-            /* ===== currently at I22 = C ===== */
-            :: (at_i[id] == I22) ->
-               if
-               :: (target == A_NODE) -> nd = N; ni = I12
-               :: else -> nd = W; ni = I21
-               fi
+                :: (at_i[id] != A_NODE) ->
+                    if
+                    :: (sig[at_i[id]] != dir[id]) ->
+                        pos[id] = APPROACH
 
+                    :: (sig[at_i[id]] == dir[id]) ->
+                        cross_was_green[id] = true;
+                        just_crossed[id]    = true;
+
+                       if
+                        /* ---------- target = D (I02, go along top row) ---------- */
+                        :: (target == I02 && at_i[id] == I10 && dir[id] == E) ->
+                           nd = N; ni = I00
+
+                        :: (target == I02 && at_i[id] == I00 && dir[id] == N) ->
+                           nd = E; ni = I01
+
+                        :: (target == I02 && at_i[id] == I00 && dir[id] == E) ->
+                           nd = E; ni = I01
+
+                        :: (target == I02 && at_i[id] == I01 && dir[id] == E) ->
+                           nd = E; ni = I02
+
+
+                        /* ---------- target = C (I22, go down right side) ---------- */
+                        :: (target == I22 && at_i[id] == I02 && dir[id] == E) ->
+                            nd = S; ni = I12
+
+                        :: (target == I22 && at_i[id] == I12 && dir[id] == S) ->
+                            nd = S; ni = I22
+
+
+                        /* ---------- target = B (I20, go left along bottom) ---------- */
+                        :: (target == I20 && at_i[id] == I22 && dir[id] == S) ->
+                            nd = W; ni = I21
+
+                        :: (target == I20 && at_i[id] == I21 && dir[id] == W) ->
+                            nd = W; ni = I20
+
+
+                        /* ---------- target = A (return via left side) ---------- */
+                        :: (target == A_NODE && at_i[id] == I20 && dir[id] == W) ->
+                            nd = N; ni = I10
+
+                        :: (target == A_NODE && at_i[id] == I10 && dir[id] == N) ->
+                            nd = N; ni = I00
+
+                        /* allow reaching A regardless of direction */
+                        :: (target == A_NODE && at_i[id] == I00) ->
+                            nd = W; ni = A_NODE
+
+
+                        :: else ->
+                            nd = dir[id];
+                            ni = at_i[id]
+                        fi;
+
+                        if
+                        :: IS_UTURN(dir[id], nd) -> uturn_flag = true
+                        :: else -> skip
+                        fi;
+                        atomic {
+                       if
+                        :: (VALID_NODE(ni) && !SEG(ni, nd)) ->
+
+                            old_i = at_i[id];
+                            old_d = dir[id];
+
+                            /* acquire next segment */
+                            SEG(ni, nd) = true;
+                        
+                            /* move */
+                            pdir[id] = dir[id];
+                            dir[id]  = nd;
+                            at_i[id] = ni;
+                            pos[id]  = ON_SEG;
+
+                            /* release segment（old_i！） */
+                            if
+                            :: VALID_NODE(old_i) ->
+                                SEG(old_i, old_d) = false
+                            :: else -> skip
+                            fi;
+
+
+                            /* update visited waypoints */
+                            if
+                            :: (ni == I02) -> vis[id] = vis[id] | HAS_D
+                            :: (ni == I20) -> vis[id] = vis[id] | HAS_B
+                            :: (ni == I22) -> vis[id] = vis[id] | HAS_C
+                            :: else -> skip
+                            fi;
+
+                            /* check completion */
+                            if
+                            :: (ni == A_NODE && vis[id] == ALL_W) -> done[id] = true
+                            :: else -> skip
+                            fi;
+
+                        :: (ni == A_NODE) ->   /*  A_NODE（no busy） */
+
+                        
+
+                                old_i = at_i[id];
+                                old_d = dir[id];
+
+                                pdir[id] = dir[id];
+                                dir[id]  = nd;
+                                at_i[id] = ni;
+                                pos[id]  = ON_SEG;
+
+                                /* release old segment */
+                                if
+                                :: VALID_NODE(old_i) ->
+                                    SEG(old_i, old_d) = false
+                                :: else -> skip
+                                fi;
+
+                        :: else ->
+                            /* segment occupy → wait */
+                            pos[id] = APPROACH
+                        fi;
+                        }
+                    fi
+                fi
             fi;
 
-            /* ── Detect U-turn (should NEVER trigger; guards above
-             * exclude all opposite-direction choices)
-             * Records uturn_flag for P1 LTL formula
-             * ── */
             if
-            :: IS_UTURN(dir[id], nd) -> uturn_flag = true
-            :: else                  -> skip
-            fi;
-
-        
-            /* ── Advance to next node ── */
-            pdir[id]  = dir[id];
-            dir[id]   = nd;
-            at_i[id]  = ni;   /* may be A_NODE or a circle intersection */
-            pos[id]   = ON_SEG
-            /* Tour completion is detected in the next APPROACH step:
-             * when at_i == A_NODE the car has physically arrived at A. */
-
-        fi /* end red/green */
-        fi /* end A_NODE / circle intersection */
-    od /* end main loop */
+            :: (id == 0) -> turn = 1
+            :: (id == 1) -> turn = 2
+            fi
+        }
+    od
 }
 
 
@@ -434,9 +434,12 @@ init {
         uturn_flag = false;
         started[0] = false;
         started[1] = false;
+        turn = 0;
         run Signals();
         run Car(0, A_NODE, E);   /* departs from A, heads east to I00 */
         run Car(1, I01,    E);
+         /* initial segment occupancy */
+        SEG(I01, E) = true;   /* Car1 starts on I01 -> I02 */
     }
 }
 
@@ -468,10 +471,12 @@ ltl p1_no_uturn { [] !uturn_flag }
  * Run: spin -run -ltl p2_no_redlight vehicle_check.pml
  */
 ltl p2_no_redlight {
-    [] ( (!just_crossed[0] || cross_was_green[0]) &&
-         (!just_crossed[1] || cross_was_green[1]) )
+    [] (
+        (!just_crossed[0] || cross_was_green[0])
+        &&
+        (!just_crossed[1] || cross_was_green[1])
+    )
 }
-
 
 /* ── P3: Every car visits all waypoints ───────────────────
  * "Every vehicle must visit all of points B, C and D." (spec #3)
@@ -484,8 +489,11 @@ ltl p2_no_redlight {
 /* done[id] is now set when car physically arrives at A_NODE
  * (1/30-mile return segment from I00 completed) */
 ltl p3_visits_all {
-    (<> done[0]) &&
-    (<> done[1])
+    <> (
+        (vis[0] == ALL_W && done[0])
+        &&
+        (vis[1] == ALL_W && done[1])
+    )
 }
 
 
@@ -498,14 +506,19 @@ ltl p3_visits_all {
  *
  * Run: spin -run -ltl p4_no_collision vehicle_check.pml
  */
-ltl p4_no_collision {
-    [] !( started[0] && started[1] &&
-          !done[0] && !done[1] &&
-          at_i[0] == at_i[1]   &&
-          pos[0]  == pos[1]    &&
-          dir[0]  == dir[1] )
-}
 
+
+ltl p4_no_collision {
+    [] !(
+        started[0] && started[1] &&
+        !done[0] && !done[1] &&
+        at_i[0] != A_NODE &&
+        at_i[1] != A_NODE &&
+        at_i[0] == at_i[1] &&
+        pos[0]  == pos[1]  &&
+        dir[0]  == dir[1]
+    )
+}
 
 /* ── P5: No starvation at red light (own-choice property) ─
  * "A car waiting at APPROACH always eventually crosses."
@@ -518,6 +531,9 @@ ltl p4_no_collision {
  * Requires weak fairness: spin -run -f -ltl p5_no_starvation vehicle_check.pml
  */
 ltl p5_no_starvation {
-    [] ( (pos[0] == APPROACH -> <> (pos[0] == ON_SEG || done[0])) &&
-         (pos[1] == APPROACH -> <> (pos[1] == ON_SEG || done[1])) )
+    [] (
+        (pos[0] == APPROACH -> <> (pos[0] == ON_SEG || done[0]))
+        &&
+        (pos[1] == APPROACH -> <> (pos[1] == ON_SEG || done[1]))
+    )
 }

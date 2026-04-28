@@ -1,0 +1,47 @@
+pan: ltl formula p1_no_uturn
+
+(Spin Version 6.5.2 -- 6 December 2019)
+	+ Partial Order Reduction
+
+Full statespace search for:
+	never claim         	+ (p1_no_uturn)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 84 byte, depth reached 1776, errors: 0
+      412 states, stored
+       92 states, matched
+      504 transitions (= stored+matched)
+     2909 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    0.044	equivalent memory usage for states (stored*(State-vector + overhead))
+    0.269	actual memory usage for states
+  512.000	memory used for hash table (-w26)
+   10.681	memory used for DFS stack (-m200000)
+  522.877	total actual memory usage
+
+
+unreached in proctype Signals
+	vehicle_check.pml:173, state 35, "-end-"
+	(1 of 35 states)
+unreached in proctype Car
+	(0 of 120 states)
+unreached in init
+	(0 of 7 states)
+unreached in claim p1_no_uturn
+	_spin_nvr.tmp:8, state 10, "-end-"
+	(1 of 10 states)
+
+pan: elapsed time 0 seconds
+ltl p1_no_uturn: [] (! (uturn_flag))
+ltl p2_no_redlight: [] (((! (just_crossed[0])) || (cross_was_green[0])) && ((! (just_crossed[1])) || (cross_was_green[1])))
+ltl p3_visits_all: <> ((vis[0]==7))
+ltl p4_no_collision: [] (! (((((((started[0]) && (started[1])) && (! (done[0]))) && (! (done[1]))) && ((at_i[0]==at_i[1]))) && ((pos[0]==pos[1]))) && ((dir[0]==dir[1]))))
+ltl p5_no_starvation: [] ((! ((pos[0]==1))) || (<> (((pos[0]==0)) || (done[0]))))
+  the model contains 5 never claims: p5_no_starvation, p4_no_collision, p3_visits_all, p2_no_redlight, p1_no_uturn
+  only one claim is used in a verification run
+  choose which one with ./pan -a -N name (defaults to -N p1_no_uturn)
+  or use e.g.: spin -search -ltl p1_no_uturn vehicle_check.pml
